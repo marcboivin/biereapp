@@ -1,0 +1,96 @@
+# This Python file uses the following encoding: utf-8
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect
+from django.core.cache import cache
+from django.template.loader import get_template
+from django.shortcuts import render_to_response
+from django.template import Template, RequestContext
+from django.conf import settings
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+
+#from io.exceptions import IOPasswordProtected
+#from io import signals
+from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm
+from biereapp import models
+
+from biereapp.models import logit
+
+@login_required
+def Dashboard(request):
+    return render_to_response('dashboard.html', { 'user': request.user })
+    
+@login_required
+def CreerCommande(request):
+    created = False
+    facture = False
+    # There is a new commande to create
+    if request.method == 'POST':
+        factureform = FactureForm(request.POST)
+        if factureform.is_valid():
+            bill 		        = factureform.save( commit=False )
+            bill.User           = request.user
+            bill.save()
+            created 	        = True
+            facture				= bill
+    else:
+        factureform = FactureForm()
+        facture 	= Facture() 
+        commande    = False
+        produits    = False
+		
+    return render_to_response('facture/new.html', {'created':created, 'factureform': factureform, 'user': request.user, 'facture': facture })
+    
+@login_required
+def AddUserTransation(request):
+    """Ajoute un produit à une commande"""
+    facture             = False
+    commande            = TransactionForm( request.POST )
+    print request.POST
+    # transaction to add
+    # ToDo: Save the form in a instance of the Transaction model! Or make the ModelForm and override the __init__
+    if commande.is_valid():
+        transaction         = commande.save()
+        facture             = transaction.Facture
+        # Ajoute comme une commande
+        #transaction.add_to_commande( )
+        transaction.save()
+
+    if not facture:
+        facture = commande
+        
+    template_var = { 'user': request.user, 'facture': facture }
+    
+    # Detects AJAX requests made from jQuery (which I use in this program)
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        return render_to_response('facture/add_produit.ajax', template_var)
+        
+    return render_to_response('facture/facture.html', template_var)
+    
+@login_required
+def NewProduit(request):
+    created = False
+    if request.method == 'POST':
+        produit = ProduitForm(request.POST)
+        if produit.is_valid():
+            produit.save();
+            created = True
+            
+    else:
+        produit = models.ProduitForm()
+        
+    return render_to_response('produits/new.html', {'created':created, 'produit': produit, 'user': request.user })
+    
+@login_required
+def NewClient(request):
+    client = False
+    form = ClientForm()
+    if request.POST:
+        client = ClientForm(request.POST)
+        
+        if client.is_valid():
+            # Save the form
+            client = client.save()
+            #save the entry
+            client.save()
+    
+    return render_to_response('clients/new.html', {'client': client, 'form': form})

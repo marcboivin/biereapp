@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load comments %}
+{% load io_extras %}
+
+{%block title%}Modification de votre profile:: {{user.username}}{%endblock%}
+
+{%block content%} 
+
+						<div class="message">
+							<h3>Modifier votre profil</h3>
+							<a href="/" class="calltoaction">Transmettre un fichier <span>&uarr</span></a>
+							<p>
+								Vous pouvez modifier votre information personnelle ci-dessous et gérer les boîtes créées sur la plateforme. 
+							</p>
+						</div>
+						<div class="roundbox">
+							<h4>Information personnelle</h4>
+							<form action="/profile/save/" method="post" id="settings_form">
+							    {% if user_form.errors %}
+									<div class="error">
+										<h5>Impossible de modifier votre profil</h5>
+										{%for field in user_form %}
+										{%if field.errors%}
+										<p>Une erreur s'est glissée dans le formulaire. Veuillez apporter les modifications nécessaires.</p>
+										<dl><dt>{{ field.label}} :</dt><dd>{{field.errors}}</dd></dl>
+										{%endif%}
+										{%endfor%}
+									</div>
+								{% endif %}
+
+								<ul>
+									<li>
+										<label for="id_first_name">Prénom</label> 
+										{{user_form.first_name}}
+									</li>
+									<li>
+										<label for="id_last_name">Nom</label> 
+										{{user_form.last_name}}
+									</li>
+									<li>
+										<label for="id_username">Nom d'usager</label> 
+										{{user_form.username}}
+									</li>
+									<li>
+										<label for="id_email">Courriel</label> 
+										{{user_form.email}}
+									</li>
+									
+          							{% if pwd_change.errors %}
+									pwd_change.errors
+									{% endif %}
+									{{ pwd_change.as_ul }}
+									<li id="id_avatar">
+										<img src="{% gravatar user 68 %}" class="avatar" /> 
+										<p>Vous pouvez modifier l'avatar ci-dessus en vous inscrivant au service <a href="http://en.gravatar.com/site/signup/">Gravatar</a>, en utilisant la même adresse courriel.</p>
+									</li>
+									<li class="submit">
+										<input type="submit" name="sumb_connect" id="sumb_connect" value="&rarr;"/>
+                                        <input type="hidden" name="id" value="{{user_form.id}}" />
+										<input type="hidden" id="next" name="next" value="/"/>
+									</li>
+									<li class="clearer"></li>
+								</ul>
+							</form>
+						</div>
+						<div class="message">
+						<hr />
+							<h3>Gérer vos fichiers</h3>
+							<p>
+								Voici la liste des boîtes que vous avez créés sur cette plateforme. 
+							</p>
+						</div>
+						{{ios}}
+
+{%endblock%}

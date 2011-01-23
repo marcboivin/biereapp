@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{%block content%}
+<h2>Nouvelle commande</h2>
+{% if not created %}
+<form action="/factures/creer/" method="post">
+    <header class="form message">
+        <header class="etapes">Étape 1 de 2 <div></div></header>
+        <section class="help_text content">La première étape est de donner une raison ou un événement à la facture (plus facile de garder une trace après!). Sans oublié le client!</section>
+        <div class="clearer"></div>
+    </header>
+    <div class="form_content">
+        <header><h3>Nommer votre commande</h3><div></div></header>
+        {{factureform}}
+        <input type="submit" value="Ajoutez de la bière &rarr;" />
+        <section class="notes">
+            <p>Créer des clients dans l'<a href="/admin/biereapp/client/">admin</a></p>
+        </section>
+    </div>
+</form>
+{% else %}
+<header class="form message">
+    <header class="etapes">Étape 2 de 2 <div></div></header>
+    <section class="help_text content">Maintenant, ajoutez de la bière à cette commande. Juste à choisir un produit et une quantité, pas plus compliqué que ça.</section>
+    <div class="clearer"></div>
+</header>
+	{% include 'snippets/commande_ajout_produit.html' %}
+{% endif %}
+{%endblock%}
+
+

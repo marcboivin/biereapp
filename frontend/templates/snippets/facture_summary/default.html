@@ -1,0 +1,30 @@
+{% load humanize %}
+<div class="liste">
+    <span class="nb_factures">{{factures.count}}</span>
+    <table class="factures">
+        <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Note</th>
+        </tr>
+        <tr>
+            {%if factures.count > 0 %}
+                {% for facture in factures %}
+                    <tr>
+                        <td class="id"><a href="/factures/{{facture.id}}/">{{facture.id}}</a></td>
+                        <td class="client">{{facture.Client}}</td>
+                        <td class="date">{{facture.Date|naturalday }}</td>
+                        <td class="total">{{facture.total}}</td>
+                        <td class="note">{{facture.Note}}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <p>Pas de facture! <a href="/factures/creer">Créer une facture</a></p>
+            {% endif %}
+        </tr>
+    </table>
+
+    <a href="/factures/liste/" class="more">Toutes les factures</a>
+</div>

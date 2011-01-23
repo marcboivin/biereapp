@@ -1,0 +1,37 @@
+{% load extras %}
+<form action="/factures/produit/ajout/" method="post" id="add_prod_comm">
+    <div class="container">
+    <header><h3>{{facture.Note}}</h3><div></div></header>
+    <h3>Ajout d'une transaction</h3>
+	<ul>
+	    {% if facture.errors %}
+	        {{facture.as_ul}}
+	    {% else %}
+	        {% transaction_form facture %}
+	    {% endif %}
+        <li><input type="submit" value="Ajouter ce produit &rarr;" id="submit_prod" name="submit_prod" />
+	    <li class="clearer"></li>
+        <li><a href="/factures/{{facture.id}}" class="action">Terminer ma commande</a></li>
+	</ul>
+	<section class="notes">
+        <p>Créer des produits dans l'<a href="/admin/biereapp/prix/">admin</a> ou avec le <a href="/produits/new/">système</a></p>
+    </section>
+	</div>
+</form>
+
+{% if facture.transactions %}
+<secion class="dans_la_commande">
+    <header><h3>Produits dans la commande</h3><div></div></header>
+    <ol>
+        {% for t in facture.transactions %}
+            <li class="{{t.Type}}"><span class="type">{% trans_type t.Type %}</span> {{t.Prix.Produit.Nom}} <em>{{t.Prix.Prix|monetize}}</em> {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} <small>{{t.Note}}</small> x{{t.Qte}} : {{t.get_total|monetize}}</li>
+        {% empty %}
+            <li>Pas de transaction</li>
+        {% endfor %}
+    </ol>
+    <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
+    <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>
+</section>
+{% else %}
+Pas de transaction dans la facture
+{% endif %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{%block body_class%}
+    liste 
+{%endblock%}
+
+{%block content%}
+<h2><em>Produits</em> La Liste, avec un grand <em>L</em></h2>
+<a href="/produits/creer/" class="add">Ajouter un produit</a>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Brasseur</th>
+            <th>Nom</th>
+            <th>Consigne </th>
+        </tr>
+    </thead>
+{% for produit in object_list %}
+
+    <tr>
+        <td><a href="/produits/{{produit.id}}/">{{produit.id}}</a></td>
+        <td>{{produit.Brasseur }}</td>
+        <td>{{produit.Nom}}</td>
+        <td>{{produit.Consigne}}</td>
+    </tr>
+{% endfor %}
+</table>
+{%endblock%}

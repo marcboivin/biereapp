@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load extras %}
+
+{%block content%}
+<h2>Nouveau Produit</h2>
+{% if not created %}
+<form action="/produits/creer/" method="post">
+    <header class="form message">
+        <header class="etapes">Plus de bière <div></div></header>
+        <section class="help_text content">Pour qu'un produit soit disponible à la commande, il faut le créer et lui créer des prix. Ici on crée le produit, pas si mal, non?</section>
+        <div class="clearer"></div>
+    </header>
+    <div class="form_content">
+        {{produit}}
+        <input type="submit" value="Looks good, ajoute mon produit &rarr;" />
+        <section class="notes">
+            <p>Créer des brasseurs dans l'<a href="/admin/biereapp/brasseur/">admin</a></p>
+        </section>
+    </div>
+</form>
+{% else %}
+<header class="form message">
+    <header class="etapes">W00t Nouveau produit <div></div></header>
+    <section class="info_text content">Voici à quoi ressemble votre nouveau bébé.</section>
+    <div class="clearer"></div>
+</header>
+
+    {% include 'snippets/produit_details.html' %}
+
+{% endif %}
+{%endblock%}

@@ -1,0 +1,22 @@
+{% load humanize %}
+<div class="liste">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Événement (note)</th>
+                <th>Demandeur</th>
+            </tr>
+        </thead>
+    {% for facture in paged_factures.object_list %}
+        <tr>
+            <td><a href="/factures/{{commande.id}}/">{{facture.id}}</a></td>
+            <td>{{facture.Date|naturalday }}</td>
+            <td>{{comfacturemande.Note}}</td>
+            <td>{{facture.User}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </table>
+</div>

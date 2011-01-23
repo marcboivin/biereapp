@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{flatpage.title}}
+{% endblock %}
+
+{% block content %}
+
+						<div class="message">
+							<h3>À la prochaine</h3>
+							<p>
+								Vous avez quitté de façon sécuritaire le portail de partage de fichiers de MA14.
+							<p>
+							<hr />
+							<h3>Revenir en arrière</h3>
+							<p>Pour retrouver l'accès à vos fichiers ou échanger à nouveaux des documents avec l'équipe de MA14, reconnectez-vous au besoin via le formulaire ci-dessous. 
+							</p>
+						</div>
+						
+						{% include "snippets/login.html" %}
+						
+						<div class="message">
+							<p>
+								<small>Veuillez communiquer avec la personne qui vous a transmise ce lien si vous éprouvez des difficultés.</small>
+							</p>
+							<!--
+							<hr />
+							<h3>Êtes-vous perdu?</h3>
+							<p>Vous êtes présentement sur la page d'accueil d'un service privé. Si vous souhaitez transmettre des fichiers à vos amis ou votre famille de façon sécuritaire, nous vous proposons d'utiliser le service <a href="http://drop.io">Drop.io</a>.</p>
+						-->
+						
+						</div>
+
+{%endblock%}
+

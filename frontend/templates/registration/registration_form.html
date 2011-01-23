@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+						<div class="message">
+							<h3>Création de compte</h3>
+							<p>
+								Vous devez être identifié afin de pouvoir transférer un fichier sur cette plateforme. Vous pouvez vous créer un compte via le formulaire ci-dessous. 
+							</p>
+						</div>
+						<div class="roundbox">
+							<h4>Inscription</h4>
+							<form method="post" action="." id="registration_form">
+								{% if form.errors %}
+									<div class="error">
+										<h5>Il y a des erreurs dans la saisie des informations de votre profile</h5>
+										{%for field in form %}
+										{%if field.errors%}
+										<p>Une erreur s'est glissée dans le formulaire. Veuillez apporter les modifications nécessaires.</p>
+										<dl><dt>{{ field.label}} :</dt><dd>{{field.errors}}</dd></dl>
+										{%endif%}
+										{%endfor%}
+									</div>
+								{% endif %}
+								<ul>
+									<li>
+										<label for="id_username">Nom d'usager</label> 
+										{{form.username}}
+									</li>
+									<li>
+										<label for="id_email">Courriel</label> 
+										{{form.email}}
+									</li>
+									<li>
+										<label for="id_password1">Mot de passe</label> 
+										{{form.password1}}
+									</li>
+									<li>
+										<label for="id_password2">(Vérification)</label> 
+										{{form.password2}}
+									</li>
+									
+          							{% if pwd_change.errors %}
+									pwd_change.errors
+									{% endif %}
+									{{ pwd_change.as_ul }}
+									<li id="id_avatar">
+										<img class="avatar" /> 
+										<p>Vous pouvez modifier l'avatar ci-dessus en vous inscrivant au service <a href="http://en.gravatar.com/site/signup/">Gravatar</a>, en utilisant la même adresse courriel.</p>
+									</li>
+									<li class="submit">
+										<input type="submit" id="submit" value="&rarr;" />
+									</li>
+									<li class="clearer"></li>
+								</ul>
+							</form>
+						</div>
+{% endblock %}

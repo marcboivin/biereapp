@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{flatpage.title}}
+{% endblock %}
+
+{% block content %}
+                        <h2>Gestion de la bière pour l'AEP</h2>
+						<div class="message">
+                            <header>Connexion<div></div></header>
+							<p class="content help_text">
+                                BierEAP est une application à accès restreind. Veuillez demander à un représentant de l'EAP de vous créer un compte si vous n'en posséder pas. 
+							</p>
+						</div>
+					    {% include "snippets/login.html" %}
+
+{%endblock%}
+

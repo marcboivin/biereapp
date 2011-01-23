@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load extras %}
+{% load humanize %}
+
+{%block body_class%}
+    liste 
+{%endblock%}
+
+{%block content%}
+<h2><em>Factures</em> La Liste, avec un grand <em>L</em></h2>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Événement (note)</th>
+            <th>Demandeur</th>
+        </tr>
+    </thead>
+{% for facture in object_list %}
+
+    <tr>
+        <td><a href="/factures/{{facture.id}}/">{{facture.id}}</a></td>
+        <td>{{facture.Date|naturalday }}</td>
+        <td>{{facture.Note}}</td>
+        <td>{{facture.Client}}</td>
+    </tr>
+{% endfor %}
+</table>
+{%endblock%}

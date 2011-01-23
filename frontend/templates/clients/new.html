@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{%block content%}
+<h2>Nouveau client</h2>
+<form action="/clients/creer/" method="post">
+    <header class="form message">
+        <header class="etapes">Nouveau client<div></div></header>
+        <section class="help_text content">
+            
+            Pour créer un client, rien de plus simple, il faut un nom, c'est tout.
+            
+            {% if client %}
+                <p>
+                    <strong>{{client}} a été ajouté à la liste des clients, <a href="/factures/creer">créer une facture</a></strong>
+                </p>
+            {% endif %}
+            
+            </section>
+        <div class="clearer"></div>
+    </header>
+    <div class="form_content">
+        <header><h3>Le petit nom du client</h3><div></div></header>
+        {{form.as_ul}}
+        <input type="submit" value="Yup, et un autre client &rarr;" />
+    </div>
+</form>
+{%endblock%}
+
+

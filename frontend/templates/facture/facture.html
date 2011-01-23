@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{%block content%}
+<h2>Commande: {{facture.note}}</h2>
+
+<header class="form message">
+    <header class="etapes">Gestion de la facture<div></div></header>
+    <section class="info_text content">Cette commande existe. Vous pouvez donc, lui ajouter des produits, voir ce qui se passe avec et lui donner du chocolat chaud.</section>
+    <div class="clearer"></div>
+</header>
+	{% include 'snippets/commande_ajout_produit.html' %}
+{%endblock%}
+
+
+

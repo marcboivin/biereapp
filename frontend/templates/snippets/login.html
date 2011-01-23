@@ -1,0 +1,39 @@
+<div class="roundbox login">
+			<h2>Connexion</h2>
+			{% if user.is_authenticated %}
+			<p>{{user.first_name}}, vous êtes déjà connecté. Vous pouvez maintenant <a href="/">partager un fichier</a>.</p>
+			{% else %}
+			<form action="./" method="post" id="connect_form">
+                {% if form.errors %}
+					<div class="error">
+						<h5>Mauvaise informations</h5>
+						{%for field in form %}
+						{%if field.errors%}
+						<p>Une erreur s'est glissée dans le formulaire. Veuillez apporter les modifications nécessaires.</p>
+						<dl><dt>{{ field.label}} :</dt><dd>{{field.errors}}</dd></dl>
+						{%endif%}
+						{%endfor%}
+					</div>
+				{% endif %}
+				<ul>
+					<li>
+                        {% if form.username.errors %}<div class="error">{{form.username.errors}}</div>{% endif %}
+						<label for="id_username" class="overlay">Nom d'utilisateur</label> 
+						<input type="text" maxlength="30" name="username" id="id_username" class="defaultvalue" />
+					</li>
+					<li>
+                        {% if form.password.errors %}<div class="error">{{form.password.errors}}</div>{% endif %}
+						<label for="id_password" class="overlay">Mot de passe</label> 
+						<input type="password" id="id_password" name="password" class="defaultvalue" />
+					</li>
+					<li>
+						<input type="submit" name="sumb_connect" id="sumb_connect" value="Connexion &rarr;"/>
+						<div class="clearer"></div>
+						<input type="hidden" id="next" name="next" value="/"/>
+						{% csrf_token %}
+					</li>
+					<li class="clearer"></li>
+				</ul>
+			</form>
+		</div>
+{%endif%}

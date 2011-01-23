@@ -1,0 +1,38 @@
+TODO:
+
+  * [DONE] REFAIRE LE FORMULAIRE DE COMMANDE POUR SUPPORTER TOUTES LES TYPE DE TRANSACTIONS SELON L'UTILISATEUR 
+  
+  * Faire la page de la facture qui démonte les taxes et affiche la facture comme du monde. 
+  * Faire l'ajout de Prix en AJAX quand on crée ou visionne un produit
+  * Faire l'envoi de courriel à la fille des finances et lui faire un usagé
+  
+===== Création de produit ======
+ * Ajout de Prix par AJAX
+ * Gestion des droits d'accès pour savoir qui peut créer des produits
+ * Pofiner les interfaces
+
+===== La création de client =====
+ * Pas fait, par le backend pour le moment
+
+===== Une partie de la gestion des commandes =====
+ * On peut ajouter des produits et faire des calcul de totaux
+ * Débuter l'écran admin (voir les factures avec leurs status et totaux)
+ * Changer le modèle de donnée pour avoir un status à la commande: Nouvelle, livré, attente de paiement, etc
+
+
+
+Avec le modèle de données que j'utilise présentement on peut faire des produits 
+générique et utiliser le champ note des prix pour donner une quantité. Mais c'est pas prévu
+comme ça alors ça serait pas super trop comme gestion, mais on pourrait avoir: 
+
+Molson Dry <-- Produit
+   Prix:
+        100$ caisse de 24 COST (un prix)
+        150$ caisse de 24 AFF (un uatre prix)
+        300$ baril COST (un prix)
+        450$ baril AFF (un prix)
+        
+Si on utilise cette solution il faut que j'applique la gestion des accès qui
+est sur les produits, sur les prix. Ça se fait, mais faut prendre un descision. 
+
+Ok non finalement le contrôle est déjà sur le prix. Good job marc :P

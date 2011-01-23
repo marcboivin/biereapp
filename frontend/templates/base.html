@@ -1,0 +1,31 @@
+{% load extras %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AEP: Gestion des stocks de bières - {% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% get_path 'CSS' %}html5-yui-reset.css" /> 
+    <link type="text/css" rel="stylesheet" href="{% get_path 'CSS' %}style.css" />
+    {% block css %}
+    {% endblock %}
+    
+    {% block js %}
+    {% endblock %}
+</head>
+<body class="biereapp {%block body_class%}{%endblock%}">
+    <div id="page">
+        <header>
+                <h1><a href="/" title="Retour au dashboard">Bièreapp, gestion de la broue pour l'AEP</a></h1>
+                {%block menu %}
+                    {% include 'snippets/menu.html' %}
+                {% endblock %}
+        </header>
+        <section id="content">
+                {%block content%}
+                {%endblock%}
+        </section>
+    </div>
+    <script src="{%get_path 'JS' %}jquery-1.4.2.js"></script>
+    <script src="{%get_path 'JS' %}admin.js"></script>
+</body>
+</html>

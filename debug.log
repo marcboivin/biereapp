@@ -1,0 +1,71 @@
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:21:03 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:21:03 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Nombre de transaction: 3
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total is not a integer, default to 0
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total is 0
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:21:03 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:21:03 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Nombre de transaction: 3
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total is not a integer, default to 0
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total is 0
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:21:03 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:21:03 2011: transaction: will return false
+DEBUG:root:Sat Jan 22 15:21:03 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:21:03 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:21:03 2011: transaction: will return false
+DEBUG:root:Sat Jan 22 15:23:13 2011: Created: 
+DEBUG:root:Sat Jan 22 15:37:03 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:37:04 2011: Facture?
+DEBUG:root:Sat Jan 22 15:39:28 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:39:28 2011: Facture?
+DEBUG:root:Sat Jan 22 15:39:29 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:39:29 2011: Facture?
+DEBUG:root:Sat Jan 22 15:39:45 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:39:45 2011: Facture?
+DEBUG:root:Sat Jan 22 15:40:21 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:40:21 2011: Facture?
+DEBUG:root:Sat Jan 22 15:40:49 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:40:49 2011: Facture?
+DEBUG:root:Sat Jan 22 15:43:08 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:43:08 2011: Facture?
+DEBUG:root:Sat Jan 22 15:43:35 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:43:35 2011: Facture?
+DEBUG:root:Sat Jan 22 15:44:09 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:44:09 2011: Facture?
+DEBUG:root:Sat Jan 22 15:48:11 2011: Créer commande
+DEBUG:root:Sat Jan 22 15:48:11 2011: Facture?
+DEBUG:root:Sat Jan 22 15:48:11 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:48:11 2011: transaction: will return false
+DEBUG:root:Sat Jan 22 15:50:01 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:01 2011: transaction: will return false
+DEBUG:root:Sat Jan 22 15:50:39 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:39 2011: transaction: will return false
+DEBUG:root:Sat Jan 22 15:50:48 2011: commande is valid
+DEBUG:root:Sat Jan 22 15:50:48 2011: add_to_commande: Transaction saved
+DEBUG:root:Sat Jan 22 15:50:48 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:48 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:50:48 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:48 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:50:48 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:50:48 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:48 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:50:48 2011: total: Nombre de transaction: 1
+DEBUG:root:Sat Jan 22 15:50:48 2011: total: Total is not a integer, default to 0
+DEBUG:root:Sat Jan 22 15:50:48 2011: total: Total is 0
+DEBUG:root:Sat Jan 22 15:50:48 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:50:48 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:53:11 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:53:11 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:53:11 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:53:11 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:53:11 2011: total: Total has been called
+DEBUG:root:Sat Jan 22 15:53:11 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:53:11 2011: transaction: will not return false
+DEBUG:root:Sat Jan 22 15:53:11 2011: total: Nombre de transaction: 1
+DEBUG:root:Sat Jan 22 15:53:11 2011: total: Total is not a integer, default to 0
+DEBUG:root:Sat Jan 22 15:53:11 2011: total: Total is 0
+DEBUG:root:Sat Jan 22 15:53:11 2011: transactions: Les transactions
+DEBUG:root:Sat Jan 22 15:53:11 2011: transaction: will not return false

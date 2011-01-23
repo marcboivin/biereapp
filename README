@@ -1,0 +1,47 @@
+L'appliation doit rouler dans le root de l'adresse web, i.e.: example.com et non example.com/biereapp
+
+Dans le système:
+  * Pour créer des produits utilisable par le système il faut: Créer un brasseur, lui créer un produit et 
+    lui créer un prix accessible par l'utilisateur en cours.
+    
+  * Quand on fait un paiemnt, le produit est paiment
+  
+  * Les retour de vide sont fait en proportion du produit. Si on a un produit qui est une caisse de 24
+    le retour de 4 bière est donc 4/24 du produit. C-à-d: 0.16. La consigne est arrondi à la hausse automatiquement. 
+    
+    
+    
+Commante marche l'outil:
+
+Afin de pouvoir faire des factures il faut absolument avoir au moins un brasssur, un produit et un prix.
+
+===== Brasseurs =====
+Les brasseurs sont simplement des identifiants à qui on attribu des produits. Il n'y à pas d'autre information à leur sujet. 
+Un brasseur est la base du système, sans au moins un brasseur, il est impossible de faire quoi que ce soit avec le système.
+
+===== Produits =====
+Les produits désigne les produits qu'un brasseur offre. Le système est fait pour qu'un produit ait la quatité dans son nom. 
+Si on veut avoir de la blanche en caisse de 24, on appel le produit: Blanche, Caisse de 24. il n'y à pas de gestion des 
+quantité dans l'outil. On peut, par contre, commander des fration de produit. 
+
+Ce qui veut dire que s'il n'y a que le produit Blanche, caisse de 24 et qu'on veut faireun commande pour 12 blanches, on peut
+entrer une quantité de 0.5 dans la commande. Même chose pour les retours. 
+
+===== Les prix =====
+Les prix sont attribués à des produits. Il y a 3 type de prix: Coûtant, Affiché et spécial. Uun produit peut avoir autant de prix
+que l'utilisateur qui les crée veut en faire. Il y a un champ note pour permettre de distinguer les prix de la même catégorie
+
+
+==== Client =====
+Les clients sont des identifiant pour les gens à qui ont fait des factures. Il est possible d'utiliser les clients et les factures
+pour gérer les commandes aux fournisseurs de l'AEP, mais ce n'est pas prévu au système pour le moment.
+
+===== Factures =====
+L'outil permet de faire de facture. Une facture est, en quelque sorte, un logue des activités sur une activitée:
+ * On fait une commandede produit, à ce moment, les produits ne sont pas charchés
+ * Le produits sortent de l'inventaire, il sont chargés à la facture et la consigne est cumulé
+ * Des produits sont rapportés, ils sont retiré de la facture
+ * Les produits vide consignés sont retirés de la consigne à payer
+ * La facture est fermée. 
+ 
+On peut aussi appliquer des rabais à une facture

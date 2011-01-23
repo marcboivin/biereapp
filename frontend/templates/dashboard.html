@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load extras %}
+
+{%block title%}
+    Le Bière board {%block subtitle %} Page principale {%endblock%}
+{%endblock%}
+
+{%block content%}
+    <h2>Dashboard!</h2>
+    <p>Vos commandes vos alertes et vos lendemain de veille</p>
+    <h3>Dernières commandes</h3>
+
+    {% facture_summary 5 %}
+
+    {%block subcontent %}
+    {%endblock%}
+{%endblock%}

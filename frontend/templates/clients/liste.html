@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{%block body_class%}
+    liste 
+{%endblock%}
+
+{%block content%}
+<h2><em>Clients</em> Tous, les meilleurs comme les moins bon </h2>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+        </tr>
+    </thead>
+{% for client in object_list %}
+
+    <tr>
+        <td><a href="/clients/{{client.id}}/">{{client.id}}</a></td>
+        <td>{{client.Nom }}</td>
+    </tr>
+{% endfor %}
+</table>
+{%endblock%}

@@ -1,0 +1,423 @@
+body {
+    font-family: helvetica, arial, verdana, sans-serif;
+    font-weight: 100;
+    background: #eeeeee;
+}
+
+header { 
+    background: grey;
+    min-height: 30px;
+}
+
+#page {
+    overflow: hidden;
+}
+
+#page>header h1 {
+    background: transparent url(../images/logo.png) no-repeat;
+    width: 200px;
+    height: 80px;
+    text-indent: -3000em;
+    overflow: hidden;
+    float: left;
+}
+
+#page>header h1 a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+h2 {
+    margin: 20px 0;
+    font: 2em georgia, times, sans-serif;
+    border-bottom: 1px solid black;
+}
+
+h2 em  {
+    color: #a0a0a0;
+    font-weight: normal;
+    font-size: 1.2em;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+#page>header {
+    height: 120px;
+    background: transparent;
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    z-index: 5;
+    width: 960px;
+}
+
+/* Menu style */
+#main_menu {
+    background: transparent;
+    height: 65px;
+    display: block;
+    float: right;
+    width: 670px;
+}
+
+#main_menu p {
+    display: none;
+}
+
+#main_menu li {
+    display: block;
+    float: left;
+	width: 134px;
+	background: transparent;
+	color: #545454;
+	position: relative;
+	text-indent: 10px;
+	line-height: 65px;
+}
+
+#main_menu>ul>li:nth-last-child(1) {
+    float: right;
+    clear: right;
+}
+
+#main_menu>ul>li:nth-last-child(1)>a {
+    padding-right: 15px;
+    background: #ac3e3e;
+    border-bottom-right-radius: 15px 15px;
+}
+
+#main_menu > ul > li:nth-child(1)>a {
+    border-bottom-left-radius: 15px 15px;    
+}
+
+#main_menu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-size: 18px;
+}
+
+#main_menu a {
+	display: block;
+	text-decoration: none;
+	color: #545454;
+    width: 100%;
+    height: 100%;
+    font-weight: normal;
+    text-transform: uppercase;
+    background: white;
+}
+
+#main_menu a:hover {
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.41, white), to(#D6D6D6));
+    color: black;
+}
+
+#main_menu li ul li a:hover{
+    /*border-top-right-radius: 5px 5px;
+    border-bottom-right-radius: 5px 5px; */
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.41, #66cc9a), to(#D6D6D6));
+}
+
+#main_menu li ul {
+	position: relative;
+	left: -999em;
+	z-index: 12;
+	height: 56px;
+    width: 500px;
+}
+
+#main_menu li ul li {
+    margin-left: 0;
+    display: inline-block;
+    width: auto;
+}
+
+#main_menu li ul li a {
+    display: block;
+    padding: 0 15px;
+    line-height: auto;
+    width: auto;
+    background: #66cc9a;
+}
+
+#main_menu li:hover ul {
+	left: 0;
+	
+}
+
+#content {
+    background: white;
+    margin: 0 auto;
+    position: relative;
+    padding: 20px;
+    width: 880px;
+    -webkit-box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    border-top-right-radius: 15px 15px;
+    border-top-left-radius: 15px 15px;
+    min-height: 700px;
+}
+
+/* Style pour les commandes */
+header {
+    clear: both;
+}
+
+header.form section:nth-last-child(1) { 
+    clear: right;
+}
+
+.message {
+    color: black;
+    width: 850px;
+    position: relative;
+    left: -100px;
+    background: transparent url(../images/message_back.png) repeat-x 0 47px;
+    height: 155px;
+    padding: 0 115px;
+    text-transform: none;
+}
+
+.message header {
+    font-size: 21px;
+    background: #3e3e3e;
+    padding: 0 15px;
+    color: white;
+    text-transform: uppercase;
+    height: 50px;
+    line-height: 50px;
+    width: auto;
+    position: absolute;
+    left: 140px;
+}
+
+/* Style pour la pointe de couleur */
+.message header div {
+    background: transparent url(../images/header_pointe_grise.png) no-repeat;
+    bottom: -30px;
+    height: 30px;
+    left: 20px;
+    position: absolute;
+    width: 50px;
+}
+
+.message .content {
+    margin: 20px 0;
+    padding-right: 250px;
+    position: relative;
+    top: 70px;
+    left: 0;
+}
+
+.message .help_text {
+    padding-left: 80px;
+    background: transparent url(../images/help_text_back.png) no-repeat;
+    min-height: 100px;
+}
+
+.message .info_text {
+    padding-left: 80px;
+    background: transparent url(../images/info_text_back.png) no-repeat;
+    min-height: 100px;    
+}
+
+em {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* all forms should have a first level inner div to wrap the content */ 
+form > div {
+    background: #f5f1ec;
+    margin: 15px auto;
+    overflow: hidden;
+    padding: 50px 15px 15px;
+    position: relative;
+    width: 500px;
+}
+
+form header {
+    background: #4ebaff;
+    color: white;
+    left: 0;
+    padding: 0 20px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+}
+
+form header h3, form header h2 {
+    margin: 12px 0;
+}
+
+form header div {
+   background: transparent url(../images/form_header_back.png) no-repeat;
+   bottom: -20px;
+   height: 20px;
+   left: 20px;
+   position: absolute;
+   width: 35px;
+   
+}
+
+form label {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0 10px;
+    display: block;
+}
+
+form input[type=text], form input[type=password] {
+    color: #808080;
+    font-family: georgia, times, serif;
+    font-size: 18px;
+    height: 30px;
+    padding: 6 5px 5px;
+    width: 100%;
+}
+
+form input[type=submit] {
+    display: block;
+    float: right;
+    clear-after: both;
+}
+form input[type=submit]:after{
+    clear: both;
+}
+
+/* Style for the login box */
+
+#connect_form ul {
+    border: 3px solid grey;
+    display: block;
+    margin: 10px auto;
+    padding: 15px;
+    position: relative;
+    width: 400px;
+}
+
+#connect_form input[type=submit] {
+    margin: 15px 0;
+}
+
+.clearer {
+    clear: both;
+    background: transparent none;
+    height: 0;
+    display: block;
+}
+
+/* Liste des transactions dans la commande */
+.dans_la_commande {
+    display: block;
+    width: 400px;
+    overflow: hidden;
+    padding: 25px;
+    position: relative;
+    padding-top: 50px;
+}
+
+.dans_la_commande header {
+    background: #4ebaff;
+    color: white;
+    left: 0;
+    padding: 0 20px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+}
+
+.dans_la_commande header h3, .dans_la_commande header h2 {
+    margin: 12px 0;
+}
+
+.dans_la_commande header div {
+   background: transparent url(../images/form_header_back.png) no-repeat;
+   bottom: -20px;
+   height: 20px;
+   left: 20px;
+   position: absolute;
+   width: 35px;
+   
+}
+
+.dans_la_commande li {
+    width: auto;
+}
+
+/* style pour les listes générique */
+.liste table{
+    position: relative;
+    margin: 0 auto;
+}
+
+.liste th {
+    background: #66cc9a;
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: normal;
+    
+}
+
+.liste tr>th:nth-child(1)  {
+    text-align: center;
+}
+
+.liste td {
+    padding: 5px;
+    border-bottom: 1px solid black;
+    vertical-align: middle;
+}
+
+.liste tr>td:nth-child(1) {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.liste tr:hover {
+    background: #808080;
+    color: #000;
+}
+
+.liste a {
+    font-weight: bold;
+    color: #303030;
+    text-decoration: none;
+}
+
+.liste a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.liste .add {
+    background: transparent url(../images/plus-icon.png) no-repeat;
+    display: block;
+    width: 380px;
+    height: 80px;
+    border: 0;
+    text-indent: 85px;
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 80px;
+}
+
+.errorlist {
+    color: red;
+    font-weight: bold;
+}
+
+#id_Qte {
+    text-align: right;
+}
+
+
