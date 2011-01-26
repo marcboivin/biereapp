@@ -94,3 +94,10 @@ def NewClient(request):
             client.save()
     
     return render_to_response('clients/new.html', {'client': client, 'form': form})
+    
+@login_required
+def FactureDetails(request, facture_id):
+    facture = Facture.objects.get(id = facture_id)
+
+    return render_to_response('facture/details.html', {'facture': facture})
+    

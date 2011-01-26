@@ -7,6 +7,7 @@ from django.template.defaultfilters import stringfilter
 from types import *
 from locale import currency
 from decimal import Decimal
+from biereapp.middleware import GlobalUser
 
 register = template.Library()
 
@@ -74,6 +75,16 @@ def gravatar( user=None, size = 96):
         u= UserMethods( )
         u.email = user
     return u.get_gravatar_url(size)
+
+@register.simple_tag    
+def get_main_menu():
+    try:
+        User = GlobalUser.user
+    except NameError:
+        raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+        
+    return render_to_string('snippets/menu.html', {'user': User})
+    
     
 @register.simple_tag
 def facture_summary(number=10, template="default.html"):

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{%block content%}
+<h2>La facture, en détails: {{facture.note}}</h2>
+
+<header class="form message">
+    <header class="etapes">Détails<div></div></header>
+    <section class="info_text content">Ici vous pouvez voir le total détaillé et la liste complète des transactions de façon plus ordonnée.</section>
+    <div class="clearer"></div>
+</header>
+
+<section class="details">
+    <div class="date">Créé le: <time class="creation">{{ facture.Date|date:"D d M Y" }}</time></div>
+       {{facture.transaction_details}}
+        
+    </div>
+</section>
+
+{%endblock%}
+
+
+

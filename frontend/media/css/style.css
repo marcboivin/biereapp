@@ -153,6 +153,7 @@ h3 {
 #content {
     background: white;
     margin: 0 auto;
+    overflow: hidden;
     position: relative;
     padding: 20px;
     width: 880px;
@@ -235,11 +236,12 @@ em {
 /* all forms should have a first level inner div to wrap the content */ 
 form > div {
     background: #f5f1ec;
-    margin: 15px auto;
+    float: left;
+    margin: 15px 0;
     overflow: hidden;
     padding: 50px 15px 15px;
     position: relative;
-    width: 500px;
+    width: 400px;
 }
 
 form header {
@@ -317,11 +319,13 @@ form input[type=submit]:after{
 /* Liste des transactions dans la commande */
 .dans_la_commande {
     display: block;
-    width: 400px;
+    float: right;
+    margin: 15px 0;
     overflow: hidden;
     padding: 25px;
     position: relative;
     padding-top: 50px;
+    width: 400px;
 }
 
 .dans_la_commande header {
@@ -349,9 +353,17 @@ form input[type=submit]:after{
    
 }
 
+.dans_la_commande ol {
+    margin-top: 15px;
+}
+
 .dans_la_commande li {
     width: auto;
 }
+
+#content footer {
+    clear: both;
+    }
 
 /* style pour les listes générique */
 .liste table{
@@ -418,6 +430,53 @@ form input[type=submit]:after{
 
 #id_Qte {
     text-align: right;
+}
+
+.details ol {
+    margin-top: 50px;
+}
+
+.details ol > li {
+    height: 30px;
+    margin-left: 40px;
+}
+
+.details ol > li.CMD {
+    font-size: 1.1em;
+    margin: 15px 0 0 0;
+}
+
+.details ol > li time {
+    color: #3e362b;
+    display: inline-block;
+    width: 150px;
+}
+
+.details ol > li .type {
+    display: inline-block;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 125px;
+}
+
+.details ol > li .price {
+    float: right;
+    font-size: 1.3em;
+}
+
+.details ol > li.CMD .price,
+.details ol > li.RTV .price {
+    display: none;
+} 
+
+.details .tot {
+    margin: 15px 0;
+}
+
+.details .tot em {
+    float: right;
+    font-size: 1.4em;
 }
 
 

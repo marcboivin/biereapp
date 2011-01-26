@@ -44,6 +44,11 @@ class Client(models.Model):
     Nom = models.CharField(max_length=60)
     def __unicode__(self):
         return self.Nom
+        
+    def get_factures(self):
+        # ToDo
+        factures = Facture.get.filter(Client=self)
+        return False
 
 class Brasseur(models.Model):
     Nom = models.CharField(max_length=60)
@@ -120,15 +125,16 @@ class Transaction(models.Model):
         #   - Calculate based on the transaction type 
         
         # You do not oay when making a Commande
-        if self.Type == 'CMD':
+        if self.Type == 'CMD' or self.Type == 'RTV':
             return 0
             
         if self.Type == 'PAIE':
             return -self.Qte
-            
+        
+        # Those lines are just wrong     
         # Retour de Vide mean you give part of the Consigne back
-        if self.Type == 'RTV':
-            return self.Qte * self.Prix.Produit.Consigne
+        #if self.Type == 'RTV':
+        #    return self.Qte * self.Prix.Produit.Consigne
         
         if type(self.Prix.Prix) is not Decimal:
             self.Prix.Prix = 0
@@ -147,10 +153,21 @@ class Transaction(models.Model):
     def get_consigne(self):
         # Only calculate the consigne for beers that
         # have left inventory
+        # If the beer has come back, we make a negative 
+        # consigne
         if self.Type == 'INV_OUT':
             return self.Qte * self.Prix.Produit.Consigne
-        else:
-            return 0
+        
+        if self.Type == 'RTV':
+            return -self.Qte * self.Prix.Produit.Consigne
+        
+        return 0
+        
+    def get_taxes(self):
+        # ToDo: Get tha latest TAXES options by date this 
+        # option should be formatted as such {TPS: {taux:0.05, aff: "5%"}, TVQ: {taux: 0.0895, aff: "8,5%"} }
+        # return a dict with all the listed taxes and their value
+        return 0
         
     def save(self):
         # Can we have a global user that we could put here,  without having it passed
@@ -162,7 +179,8 @@ class Transaction(models.Model):
             raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
         
         if not self.User.has_perm('Transaction.'+self.Type):
-            return false
+            raise Exception(u"Vous ne pouvez pas sauvegarder ce genre de transaction, désoler")
+            return False
         
         # Call the parent method    
         super(Transaction, self).save()
@@ -175,6 +193,7 @@ class Facture(models.Model):
     Date = models.DateTimeField(auto_now_add=True)
     EstFermee = models.BooleanField(default=False)
     Note = models.CharField("Événement ou raison", max_length=140)
+    
     def __unicode__(self):
         return self.Date.__str__() + ' pour ' + self.Client.Nom
         
@@ -228,6 +247,20 @@ class Facture(models.Model):
         form = TransactionForm({'Facture': self.id})
         return form.as_ul( )
         
+    def transaction_details(self, template = 'transaction_details.html'):
+        trans = Transaction.objects.filter(Facture=self).order_by( 'Prix__Produit__id', 'Date' )
+        
+        return render_to_string('facture/' + template, { 'transactions': trans, 'facture': self })
+            
+    def get_taxes(self):
+        trans = self.transactions()
+        tot = 0
+        for t in trans:
+            if type(t) is Transaction:
+                tot += t.get_taxes()
+        return tot                
+        
+        
     class Meta:
         permissions = (
             ("creer", "Peut creer des factures"),
@@ -238,6 +271,9 @@ class Facture(models.Model):
 class Option(models.Model):
     Nom = models.CharField(max_length=40)
     Valeur = models.CharField(max_length=255)
+    Date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ('-Date', 'Nom')
         
 class FactureForm(forms.ModelForm):
     class Meta:

@@ -19,8 +19,7 @@
 	</div>
 </form>
 
-{% if facture.transactions %}
-<secion class="dans_la_commande">
+<section class="dans_la_commande">
     <header><h3>Produits dans la commande</h3><div></div></header>
     <ol>
         {% for t in facture.transactions %}
@@ -32,6 +31,3 @@
     <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
     <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>
 </section>
-{% else %}
-Pas de transaction dans la facture
-{% endif %}
