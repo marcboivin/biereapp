@@ -55,3 +55,23 @@ Options qui sont utilisées par le système
  * TVQ: Taux actuel de la TVQ
  * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
  * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 
+ 
+ 
+===== Installation =====
+ * Créer les usagés avec leur perissions respectives:
+   * Admin: tous les pouvoir
+   * Commis des commandes: Tous les pouvoir sauf deleter du stock?
+   * Commis bière: Peut ajouter des transactions du type: Retour, Retour Vide, Commande Out
+ * Créer le site dans l'admin parce qu'on utilise le Site app
+ 
+===== Gestion de l'inventaire =====
+Ma vision de la gestio nde l'inventaire est qu'au départ le client internet ai un facture dont la note est «Ajustement d'inventaire»
+Tout ce qu'il y a dans se truc c'est des INV_IN (Inventaire In) pour mettre le stock à jour. Comme ça supporte les nombre négatifs
+il est possible de faire des ajustements d'inventaires des 2 côté. Ce qui permet d'avoir un suivi des mouvements dans les inventaires.
+
+Ensuite, quand on fait une commande, il suffit de créer des factures avec les unités en commande et entrer les inventaires in (INV_IN)
+par la suite. Quand la commande est entrée, il faut fermer la facture.
+
+Les unités en commandes pour les étudiants et les fournisseur utilisent que les factures non fermées.
+
+ 

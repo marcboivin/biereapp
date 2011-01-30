@@ -1,0 +1,13 @@
+{% load extras %}
+<p>
+Bonjour,<br />
+       Juste pour vous dire que la facture #{{facture.id}} pour {{facture.Client}} créer le {{ facture.Date|date:"D d M Y" }} à été fermée.
+</p>       
+<p>Vous pouvez la consulter <a href="{% get_url_facture facture.id %}">{% get_url_facture facture.id %}</a></p>
+
+<p>Bonne journée,</p>
+
+<p>Biereapp</p>
+
+<p>Note: Courriel généré à {% now "jS F Y H:i" %}</p>
+       

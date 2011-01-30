@@ -1,6 +1,6 @@
 from django import template
 from biereapp import settings
-from biereapp.models import BiereUser, Facture, TYPE_TRANS, Prix, PrixForm
+from biereapp.models import BiereUser, Facture, TYPE_TRANS, Prix, PrixForm, Produit, Option, Transaction, Client
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.template.defaultfilters import stringfilter
@@ -8,6 +8,7 @@ from types import *
 from locale import currency
 from decimal import Decimal
 from biereapp.middleware import GlobalUser
+from django.contrib.sites.models import Site
 
 register = template.Library()
 
@@ -17,9 +18,7 @@ def get_path(which):
     
 @register.simple_tag
 def transaction_form(facture):
-    print facture.id
     if(facture.id > 0):
-        print 'Higher then 0'
         return facture.transaction_form( )
         
 @register.simple_tag
@@ -108,12 +107,50 @@ def list_prix(produit):
     return render_to_string("snippets/liste_prix_produit.html", {'prix': qs})
 
 @register.simple_tag
-def prix_form(produit):
-    if type(produit) is not int:
+def prix_form(produit_id):
+    if type(produit_id) is not int:
         return false
         
-    return PrixForm({'Produit': produit}).as_ul()
+    return PrixForm({'Produit': produit_id}).as_ul()
     
+@register.simple_tag
+def inventaire(produit):
+    #Failsafe
+    if type(produit) is not Produit:
+        return ''
+    
+    client_interne = Option.get('Client interne')
+    try:
+        client_interne = Client.objects.filter(Nom=client_interne)[0:1].get()
+    except DoesNotExist:
+        client_interne = Client()
+        
+    inventaire_in = Transaction.objects.filter(Type='INV_IN').filter(Prix__Produit=produit)
+    inventaire_out = Transaction.objects.filter(Type='INV_OUT').filter(Prix__Produit=produit)     
+    en_inventaire = get_qte(inventaire_in) - get_qte(inventaire_out)
+    # No Client interne, only opened Facture
+    etudiant = Transaction.objects.filter(Facture__EstFermee=False).filter(Type='CMD').filter(Prix__Produit=produit).exclude(Facture__Client=client_interne.id)
+    # Only client interne and opened Facture
+    fournisseur = Transaction.objects.filter(Facture__EstFermee=False).filter(Prix__Produit=produit).filter(Type='CMD').filter(Facture__Client=client_interne.id)
+    
+    tot_etu = get_qte(etudiant)
+    tot_fourn = get_qte(fournisseur)
+        
+    return render_to_string('snippets/produit_ligne_inventaire.html', locals())
+
+@register.simple_tag
+def get_url_facture(facture):
+    url = ['http://']
+    cur_site = Site.objects.get(id=settings.SITE_ID)
+    url.append(cur_site.domain)
+    url.append('factures')
+    url.appends('/')
+    url.append(facture.id)
+    url.appends('/')
+
+    return ''.join(url)
+    
+
 @register.filter(name='monetize')
 @stringfilter    
 def monetize(value):
@@ -140,19 +177,14 @@ def monetize(value):
 "Mark string as safe"
 monetize.is_safe = True
 
-"""
-@register.simple_tag
-def get_url(io, action = "view"):
-	from django.contrib.sites.models import Site
-	url = ['http://']
-	cur_site = Site.objects.get(id=settings.SITE_ID)
-	url.append(cur_site.domain)
-
-	if action != "view":
-		url.append(action)
-		url.appends('/')
-
-	url.append(io.lien)
-	
-	return ''.join(url)
-"""
+# Get the total Qte for a queryset
+def get_qte(queryset):
+    tot = 0
+    
+    for t in queryset:
+        if type(t) is not Transaction:
+            return tot
+        tot += t.Qte
+        
+    return tot    
+    

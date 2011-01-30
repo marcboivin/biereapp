@@ -3,11 +3,12 @@ from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedir
 from django.core.cache import cache
 from django.template.loader import get_template
 from django.shortcuts import render_to_response
+from django.template.loader import render_to_string
 from django.template import Template, RequestContext
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import send_mail
 #from io.exceptions import IOPasswordProtected
 #from io import signals
 from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm
@@ -45,7 +46,7 @@ def AddUserTransation(request):
     """Ajoute un produit à une commande"""
     facture             = False
     commande            = TransactionForm( request.POST )
-    print request.POST
+
     # transaction to add
     # ToDo: Save the form in a instance of the Transaction model! Or make the ModelForm and override the __init__
     if commande.is_valid():
@@ -121,17 +122,28 @@ def AddPrixProduit(request, object_id):
     
 @login_required
 def FactureFermer(request, facture_id):
-    print "Fermer une facture"
+
     facture = False
     if facture_id > 0:
         facture = Facture.objects.get(id=facture_id)
-    print facture    
+
     if facture:
+        # Wasn't closed before, so we send the mail
+        if not facture.EstFermee:
+            mail_subject = render_to_string('mail/title.txt', {'facture': facture})
+            mail_message = render_to_string('mail/content.html', {'facture': facture})
+            mail_to = Option.get('Courriels')
+            mail_to = mail_to.Valeur.split(',')
+            send_mail(mail_subject, mail_message, 'biereapp@aep.polymtl.ca',mail_to, fail_silently=False)
         facture.EstFermee = True
         facture.save()
         facture.EstFermee
-    print "Alorss donc voilà, c'est fermé ou pas? À Vous de me le dire" 
     
-    return HttpResponseRedirect('/factures/'+str(facture.id)+'/')   
+    return HttpResponseRedirect('/factures/'+str(facture.id)+'/')  
+    
+@login_required
+def ProduitInventaire(request):
+    liste_produits = Produit.objects.all().order_by('Brasseur', 'Nom')
+    return render_to_response('produits/inventaire.html', {'produits': liste_produits}) 
         
     

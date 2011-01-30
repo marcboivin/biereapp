@@ -310,6 +310,20 @@ class Option(models.Model):
     Nom = models.CharField(max_length=40)
     Valeur = models.CharField(max_length=255)
     Date = models.DateTimeField(auto_now_add=True)
+    
+    @staticmethod
+    def get(option):
+        print 'Option: ' + option
+        try:
+             valeur = Option.objects.filter(Nom=option)[0:1].get()
+        except DoesNotExist:
+            print "option does not exist"
+            return ''
+        print valeur.Valeur
+        return valeur.Valeur
+         
+    def __unicode__(self):
+        return self.Nom + ': ' + self.Valeur
     class Meta:
         ordering = ('-Date', 'Nom')
         

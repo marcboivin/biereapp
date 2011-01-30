@@ -3,7 +3,7 @@ from django.contrib.auth.views import login, logout
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from biereapp import settings
-from biereapp.views import Dashboard, CreerCommande, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer
+from biereapp.views import Dashboard, CreerCommande, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, ProduitInventaire
 from biereapp.models import Facture, Produit, Client
 
 admin.autodiscover()
@@ -66,6 +66,7 @@ urlpatterns += patterns('',
     (r'^factures/(?P<facture_id>\d+)/details/$', FactureDetails),
     (r'^factures/(?P<facture_id>\d+)/fermer/$', FactureFermer),
     (r'^produits/(?P<object_id>\d+)/add/$', AddPrixProduit),
+    (r'^produits/inventaire/$', ProduitInventaire),
     (r'^$', Dashboard),
 
 
