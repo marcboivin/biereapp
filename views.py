@@ -8,10 +8,10 @@ from django.template import Template, RequestContext
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 #from io.exceptions import IOPasswordProtected
 #from io import signals
-from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm
+from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option
 from biereapp import models
 
 from biereapp.models import logit
@@ -133,8 +133,16 @@ def FactureFermer(request, facture_id):
             mail_subject = render_to_string('mail/title.txt', {'facture': facture})
             mail_message = render_to_string('mail/content.html', {'facture': facture})
             mail_to = Option.get('Courriels')
-            mail_to = mail_to.Valeur.split(',')
-            send_mail(mail_subject, mail_message, 'biereapp@aep.polymtl.ca',mail_to, fail_silently=False)
+            mail_to = mail_to.split(',')
+            #send_mail(mail_subject, mail_message, 'biereapp@aep.polymtl.ca',mail_to, fail_silently=False)
+            
+            text_content = 'This is an important message.'
+            html_content = '<p>This is an <strong>important</strong> message.</p>'
+            msg = EmailMultiAlternatives(mail_subject, '', 'info@aep.polymtl.ca', mail_to)
+            msg.attach_alternative(mail_message, "text/html")
+            msg.send()
+            
+            
         facture.EstFermee = True
         facture.save()
         facture.EstFermee

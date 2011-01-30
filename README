@@ -74,4 +74,13 @@ par la suite. Quand la commande est entrée, il faut fermer la facture.
 
 Les unités en commandes pour les étudiants et les fournisseur utilisent que les factures non fermées.
 
+L'inventaire ne gère pas les retour pour le moment
+
+
+===== Possible ToDo =====
+ * Rendre les tables triable par Javascript: Filtre, order, etc.
+ * Plus de rapport sur les données
+ * Il manque un outil d'overview des factures. Il faudrait lister les factures sur les clients
+ 
+
  

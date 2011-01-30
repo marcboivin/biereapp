@@ -94,7 +94,7 @@ def facture_summary(number=10, template="default.html"):
     #    return user.show_user_facture(GET)
     
     # Get Facture based on the number needed
-    factures = Facture.objects.all()[0:number-1]
+    factures = Facture.objects.all()[0:number]
     return render_to_string("snippets/facture_summary/"+template, {'factures':factures, 'number': number})    
 
 @register.simple_tag
@@ -144,9 +144,9 @@ def get_url_facture(facture):
     cur_site = Site.objects.get(id=settings.SITE_ID)
     url.append(cur_site.domain)
     url.append('factures')
-    url.appends('/')
-    url.append(facture.id)
-    url.appends('/')
+    url.append('/')
+    url.append(str(facture.id))
+    url.append('/')
 
     return ''.join(url)
     
