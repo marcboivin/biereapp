@@ -107,7 +107,6 @@ MEDIA_PATHS = {
         u'UPLOAD': MEDIA_URL + UPLOAD_FOLDER
 }
 
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mjsdesign@gmail.com'
@@ -119,5 +118,5 @@ FILE_UPLOAD_PERMISSIONS = 0744
 CACHE_BACKEND = 'file:///tmp/django_cache'
 
 """Kind of a hack right now, but we set the locales based on 
-the language code caus Django doesn't seem to do it. Morron"""
+the language code caus Django doesn't seem to do it. Morrons"""
 locale.setlocale(locale.LC_ALL, LANGUAGE_CODE)
