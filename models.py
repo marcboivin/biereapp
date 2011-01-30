@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 import logging
 import datetime
-from decimal import Decimal
+from decimal import *
 from types import *
 
 from django.db import models
@@ -157,7 +157,7 @@ class Transaction(models.Model):
         # consigne
         if self.Type == 'INV_OUT':
             return self.Qte * self.Prix.Produit.Consigne
-        
+        # Briging bottles back, we get a credit
         if self.Type == 'RTV':
             return -self.Qte * self.Prix.Produit.Consigne
         
@@ -167,7 +167,33 @@ class Transaction(models.Model):
         # ToDo: Get tha latest TAXES options by date this 
         # option should be formatted as such {TPS: {taux:0.05, aff: "5%"}, TVQ: {taux: 0.0895, aff: "8,5%"} }
         # return a dict with all the listed taxes and their value
-        return 0
+
+        t = self.get_total()
+
+        getcontext().prec = 10
+
+        # Sub is the subtotal without the taxes
+        taxes = { 'TPS': 0, 'TVQ': 0, 'sub': 0 }
+        # We cannot apply taxes to negative numbers
+        if t <= 0:
+            return taxes
+
+        TPS = Decimal( str(0.05) )
+        TVQ = Decimal( str(0.085) )
+        ratio = ((1 + TPS)*(1 + TVQ))
+
+        ratio = Decimal( str( ratio ) )
+        amount_without_taxes = Decimal( str(t / ratio) )
+
+        amount_tps = amount_without_taxes * TPS
+        amount_tvq = (amount_without_taxes + amount_tps) * TVQ
+
+        taxes['TVQ'] = amount_tvq
+        taxes['TPS'] = amount_tps
+        taxes['sub'] = amount_without_taxes
+
+        return taxes
+
         
     def save(self):
         # Can we have a global user that we could put here,  without having it passed
@@ -198,6 +224,7 @@ class Facture(models.Model):
         return self.Date.__str__() + ' pour ' + self.Client.Nom
         
     def transactions(self):
+
         # We need a user in order to discriminate
         # What transactions can be shown
         qs = Transaction.objects.filter(Facture=self);
@@ -205,16 +232,13 @@ class Facture(models.Model):
         
         
         if len(qs) < 1:
-            
-            return False
-        
+            return {}
+
         return qs
         
     def total(self):
 
         trans = self.transactions()
-        
-
         
         tot = 0
         for t in trans:
@@ -222,7 +246,6 @@ class Facture(models.Model):
                 tot += t.get_total()
                 
         if type(tot) is not Decimal:
-            
             tot = 0    
         
         return tot
@@ -253,13 +276,28 @@ class Facture(models.Model):
         return render_to_string('facture/' + template, { 'transactions': trans, 'facture': self })
             
     def get_taxes(self):
+
         trans = self.transactions()
-        tot = 0
+
+        tot = []
+        tps = 0 
+        tvq = 0 
+        sub = 0
+
         for t in trans:
+
             if type(t) is Transaction:
-                tot += t.get_taxes()
-        return tot                
+                txs = t.get_taxes()
+                
+                tps += txs['TPS']
+                tvq += txs['TVQ']
+                sub += txs['sub']
+
+        tot.append(['Sous-total', sub])
+        tot.append(['TPS', tps])
+        tot.append(['TVQ', tvq])
         
+        return tot
         
     class Meta:
         permissions = (
@@ -385,3 +423,10 @@ class CommandeProduitForm(forms.Form):
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
+
+class PrixForm(forms.ModelForm):
+    class Meta:
+        model = Prix
+        widgets = {
+            'Produit': forms.HiddenInput(),
+        }

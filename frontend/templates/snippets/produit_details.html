@@ -4,7 +4,7 @@
             <li class="brasseur">Fournisseur/Brasseur: <em>{{produit.cleaned_data.Brasseur}}</em></li>
             <li class="consigne">Consigne: <em>{{produit.cleaned_data.Consigne}}</em></li>
             <li class="prix">
-                Les Prix: <a href="/admin/biereapp/prix/add/" class="add">ajouter un prix</a>
+                Les Prix: <a href="/produits/{{produit.id}}/add/" class="add">ajouter un prix</a>
                 <ul>
                 {% for prix in produit.prix %}
                     <li>{{prix.Prix}}: <em>{{prix.Note}}</em> {{prix.Note}}</li>

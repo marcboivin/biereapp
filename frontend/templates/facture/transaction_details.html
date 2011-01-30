@@ -1,10 +1,30 @@
 {% load extras %}
 <ol>
      {% for t in transactions %}
-         <li class="{{t.Type}}"><time>{{t.Date|date:"D d M Y"|capfirst}}</time> <span class="type">{% trans_type t.Type %}</span> {{t.Prix.Produit.Nom}} <em>{{t.Prix.Prix|monetize}}</em> {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} <small>{{t.Note}}</small> x{{t.Qte}} : <span class="price">{{t.get_total|monetize}}</span></li>
+         <li class="{{t.Type}}">
+             <time>{{t.Date|date:"D d M Y"|capfirst}}</time> 
+             <span class="type">{% trans_type t.Type %}</span> 
+             {{t.Prix.Produit.Nom}} 
+             
+             {%if t.Prix %}<em>{{t.Prix.Prix|monetize}}</em>{% endif %}    
+             
+             {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} 
+             
+             <small>{{t.Note}}</small> 
+             
+             {% if t.Qte %}x{{t.Qte}}{% endif %}
+             <span class="price">{{t.get_total|monetize}}</span>
+        </li>
+
      {% empty %}
          <li>Pas de transaction</li>
      {% endfor %}
  </ol>
+ 
+ <ol class="taxes">
+ {% for key, value in facture.get_taxes %}
+     <li class="{{key}}">{{ key }} <span class="price">{{ value|monetize }}</span></li>
+ {% endfor %}
+</ol>
  <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
  <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>

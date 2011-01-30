@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 #from io.exceptions import IOPasswordProtected
 #from io import signals
-from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm
+from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm
 from biereapp import models
 
 from biereapp.models import logit
@@ -72,12 +72,14 @@ def NewProduit(request):
     if request.method == 'POST':
         produit = ProduitForm(request.POST)
         if produit.is_valid():
-            produit.save();
+            produit = produit.save();
+            produit.save()
             created = True
+            return HttpResponseRedirect('/produits/'+str(produit.id) +'/')
             
     else:
         produit = models.ProduitForm()
-        
+
     return render_to_response('produits/new.html', {'created':created, 'produit': produit, 'user': request.user })
     
 @login_required
@@ -92,7 +94,6 @@ def NewClient(request):
             client = client.save()
             #save the entry
             client.save()
-    
     return render_to_response('clients/new.html', {'client': client, 'form': form})
     
 @login_required
@@ -100,4 +101,37 @@ def FactureDetails(request, facture_id):
     facture = Facture.objects.get(id = facture_id)
 
     return render_to_response('facture/details.html', {'facture': facture})
+    
+@login_required
+def AddPrixProduit(request, object_id):
+    created = False
+    prix = False
+    if request.POST:
+        form = PrixForm(request.POST)
+        if form.is_valid():
+            prix = form.save()
+            prix.save()
+            created = True
+            # Because a Prix was created, we can tell the template to use the empty form
+            prix = False
+    
+    produit = Produit.objects.get(id=object_id)
+    
+    return render_to_response('produits/produit.html', { 'produit': produit, 'created': created, 'prix': prix })
+    
+@login_required
+def FactureFermer(request, facture_id):
+    print "Fermer une facture"
+    facture = False
+    if facture_id > 0:
+        facture = Facture.objects.get(id=facture_id)
+    print facture    
+    if facture:
+        facture.EstFermee = True
+        facture.save()
+        facture.EstFermee
+    print "Alorss donc voilà, c'est fermé ou pas? À Vous de me le dire" 
+    
+    return HttpResponseRedirect('/factures/'+str(facture.id)+'/')   
+        
     

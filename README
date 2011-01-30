@@ -9,6 +9,8 @@ Dans le système:
   * Les retour de vide sont fait en proportion du produit. Si on a un produit qui est une caisse de 24
     le retour de 4 bière est donc 4/24 du produit. C-à-d: 0.16. La consigne est arrondi à la hausse automatiquement. 
     
+  * Les prix ne peuvent être entrés avec une virgule i.e.: 2,90 il faut un point i.e.: 2.90
+    
     
     
 Commante marche l'outil:
@@ -43,5 +45,13 @@ L'outil permet de faire de facture. Une facture est, en quelque sorte, un logue 
  * Des produits sont rapportés, ils sont retiré de la facture
  * Les produits vide consignés sont retirés de la consigne à payer
  * La facture est fermée. 
+ * Dans le détails d'uns facture, le Sous-total est toujours sans les rabais, parce que peu importe, les taxes sont payés sans rabais.
  
 On peut aussi appliquer des rabais à une facture
+
+===== Options =====
+Options qui sont utilisées par le système
+ * TPS: Taux actuel de la TPS
+ * TVQ: Taux actuel de la TVQ
+ * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
+ * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 

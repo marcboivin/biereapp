@@ -3,6 +3,7 @@
     <div class="container">
     <header><h3>{{facture.Note}}</h3><div></div></header>
     <h3>Ajout d'une transaction</h3>
+    {% if not facture.EstFermee %}
 	<ul>
 	    {% if facture.errors %}
 	        {{facture.as_ul}}
@@ -11,11 +12,16 @@
 	    {% endif %}
         <li><input type="submit" value="Ajouter ce produit &rarr;" id="submit_prod" name="submit_prod" />
 	    <li class="clearer"></li>
-        <li><a href="/factures/{{facture.id}}" class="action">Terminer ma commande</a></li>
+        <li><a href="/factures/{{facture.id}}/fermer/" class="action">Terminer ma commande</a></li>
 	</ul>
 	<section class="notes">
         <p>Créer des produits dans l'<a href="/admin/biereapp/prix/">admin</a> ou avec le <a href="/produits/new/">système</a></p>
     </section>
+	{% else %}
+        <div class="errorlist">
+            Cette facture est fermée. Vous ne pouvez plus la modifier. Ça inclut aussi ajouter des transactions.
+        </div>
+	{% endif %}
 	</div>
 </form>
 
@@ -23,7 +29,19 @@
     <header><h3>Produits dans la commande</h3><div></div></header>
     <ol>
         {% for t in facture.transactions %}
-            <li class="{{t.Type}}"><span class="type">{% trans_type t.Type %}</span> {{t.Prix.Produit.Nom}} <em>{{t.Prix.Prix|monetize}}</em> {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} <small>{{t.Note}}</small> x{{t.Qte}} : {{t.get_total|monetize}}</li>
+             <li class="{{t.Type}}"> 
+                 <span class="type">{% trans_type t.Type %}</span> 
+                 {{t.Prix.Produit.Nom}} 
+
+                 {%if t.Prix %}<em>{{t.Prix.Prix|monetize}}</em>{% endif %}    
+
+                 {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} 
+
+                 <small>{{t.Note}}</small> 
+
+                 {% if t.Qte %}x{{t.Qte}}{% endif %}
+                 <span class="price">{{t.get_total|monetize}}</span>
+            </li>
         {% empty %}
             <li>Pas de transaction</li>
         {% endfor %}

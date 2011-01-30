@@ -2,10 +2,10 @@ TODO:
 
   * [DONE] REFAIRE LE FORMULAIRE DE COMMANDE POUR SUPPORTER TOUTES LES TYPE DE TRANSACTIONS SELON L'UTILISATEUR 
   
-  * Faire la page de la facture qui démonte les taxes et affiche la facture comme du monde. [IN PROGRESS]
-  * Faire l'ajout de Prix en AJAX quand on crée ou visionne un produit
+  * Faire la page de la facture qui démonte les taxes et affiche la facture comme du monde. [DONE]
+  * Faire l'ajout de Prix en AJAX quand on crée ou visionne un produit [PAS EN AJAX, MAIS DONE]
   * Faire l'envoi de courriel à la fille des finances et lui faire un usagé
-  * 
+  * Une page qui donne l'inventaire supposé. Pour se faire on calcul tous les produits IN moins le produits OUT plus les retour
   
 ===== Création de produit ======
  * Ajout de Prix par AJAX

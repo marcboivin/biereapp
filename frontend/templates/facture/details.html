@@ -11,7 +11,10 @@
 </header>
 
 <section class="details">
+    <h2>Facture #{{facture.id}}</h2>
+    <div class="client">Client: <span class="nom">{{facture.Client.Nom}}</span></div>
     <div class="date">Créé le: <time class="creation">{{ facture.Date|date:"D d M Y" }}</time></div>
+    <div class="raison">Événement ou raison: <span>{{facture.Note}}</span></div>
        {{facture.transaction_details}}
         
     </div>

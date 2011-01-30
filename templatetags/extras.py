@@ -1,6 +1,6 @@
 from django import template
 from biereapp import settings
-from biereapp.models import BiereUser, Facture, TYPE_TRANS
+from biereapp.models import BiereUser, Facture, TYPE_TRANS, Prix, PrixForm
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.template.defaultfilters import stringfilter
@@ -98,6 +98,22 @@ def facture_summary(number=10, template="default.html"):
     factures = Facture.objects.all()[0:number-1]
     return render_to_string("snippets/facture_summary/"+template, {'factures':factures, 'number': number})    
 
+@register.simple_tag
+def list_prix(produit):
+    if type(produit) is not int:
+        return false
+    
+    qs = Prix.objects.filter(Produit=produit)
+    
+    return render_to_string("snippets/liste_prix_produit.html", {'prix': qs})
+
+@register.simple_tag
+def prix_form(produit):
+    if type(produit) is not int:
+        return false
+        
+    return PrixForm({'Produit': produit}).as_ul()
+    
 @register.filter(name='monetize')
 @stringfilter    
 def monetize(value):
