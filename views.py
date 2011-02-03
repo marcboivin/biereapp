@@ -168,7 +168,7 @@ def FactureInFermer(request, facture_id):
         raise Http404
         
     if facture:
-        facture.EstFermer = False
+        facture.EstFermee = False
         facture.save()
     
     return HttpResponseRedirect('/factures/'+str(facture.id)+'/')  

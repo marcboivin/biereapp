@@ -63,7 +63,16 @@ h3 {
     display: block;
     float: right;
     position: relative;
-    width: 670px;
+    width: 701px;
+}
+
+#main_menu ul {
+    background: transparent;
+	font-size: 18px;
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
 }
 
 #main_menu p {
@@ -80,12 +89,13 @@ h3 {
 	line-height: 65px;
 }
 
-#main_menu>ul>li:nth-last-child(1) {
-    float: right;
+#main_menu > ul > li:nth-last-child(1) {
     clear: right;
+    float: right;
+    width: 165px;
 }
 
-#main_menu>ul>li:nth-last-child(1)>a {
+#main_menu > ul > li:nth-last-child(1)>a {
     padding-right: 15px;
     background: #ac3e3e;
     border-bottom-right-radius: 15px 15px;
@@ -93,15 +103,6 @@ h3 {
 
 #main_menu > ul > li:nth-child(1)>a {
     border-bottom-left-radius: 15px 15px;    
-}
-
-#main_menu ul {
-    background: transparent;
-	font-size: 18px;
-	list-style: none;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
 }
 
 #main_menu a {
@@ -113,17 +114,6 @@ h3 {
     font-weight: normal;
     text-transform: uppercase;
     background: white;
-}
-
-#main_menu > ul > li:hover {
-    background: #B2FF00;
-    color: black;
-}
-
-#main_menu li ul li a:hover{
-    /*border-top-right-radius: 5px 5px;
-    border-bottom-right-radius: 5px 5px; */
-    background: #6ca830;
 }
 
 #main_menu li ul {
@@ -150,8 +140,27 @@ h3 {
 }
 
 #main_menu li:hover ul {
-	left: 0;
-	
+	left: 0;	
+}
+
+#main_menu:hover {
+    background: transparent none;
+}
+
+#main_menu > ul > li:hover a {
+    background: #B2FF00 none;
+    color: black;
+}
+
+#main_menu li ul:hover, 
+#main_menu li ul:hover a {
+    background: #6ca830;
+}
+
+#main_menu li ul li a:hover{
+    /*border-top-right-radius: 5px 5px;
+    border-bottom-right-radius: 5px 5px; */
+    background: #B2FF00;
 }
 
 #content {
@@ -415,16 +424,23 @@ form input[type=submit]:after{
     text-decoration: underline;
 }
 
-.liste .add {
+.add {
     background: transparent url(../images/plus-icon.png) no-repeat;
-    display: block;
-    width: 380px;
-    height: 80px;
     border: 0;
-    text-indent: 85px;
+    color: #3f3f3f;
+    display: block;
     font-size: 2em;
     font-weight: bold;
+    height: 80px;
     line-height: 80px;
+    text-decoration: none;
+    text-indent: 85px;
+    width: auto;
+}
+
+.add:hover {
+    background-color: #f3f3f3;
+    color: black;
 }
 
 .errorlist {

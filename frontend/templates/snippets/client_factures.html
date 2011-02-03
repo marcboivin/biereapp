@@ -1,7 +1,6 @@
 {% load extras %}
 
 <div class="liste">
-    Nombre total de facture: {{factures.count}}
     <table>
         <thead>
             <tr>
@@ -9,6 +8,7 @@
                 <th>Date</th>
                 <th>Note</th>
                 <th>Total</th>
+                <th>État</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +24,13 @@
                         {{f.total|monetize}}
                     {% endif %}
                     </td>
+                    <td>
+                        {% if f.EstFermee %}
+                            Fermée
+                        {% else %}
+                            Ouverte
+                        {%endif%}
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
@@ -31,9 +38,10 @@
                     <td>Pas de facture</td>
                     <td>—</td>
                     <td>—</td>
+                    <td>—</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    
+    <p>Nombre total de facture: {{factures.count}}</p>
 </div>

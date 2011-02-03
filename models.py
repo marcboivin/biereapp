@@ -62,11 +62,8 @@ class Client(models.Model):
             if self.Nom == client_interne:
                 return True
             else:
-                print "Vraiment pas le client interne"
                 return False
         except Exception as e:
-            print "Exception donc pas par défaut"
-            print e
             return False
         
         

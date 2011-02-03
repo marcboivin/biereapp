@@ -9,16 +9,16 @@ TODO:
   * [DONE] Mettre un champs personne ressource pour les clients
   * Demander à Manon comment elle gèrer les numéro de factures
   * [DONE] Afficher les factures par clients
-  * Les factures Client interne devrait être un onglet Commande et ne pas gérer les prix
+  * [DONE] Les factures Client interne devrait être un onglet Commande et ne pas gérer les prix
   * Envoyer les bon de commandes et les factures aux adresses courriels des comités (MAIS ÇA ARRIVERA SUREMENT PAS)
   * [DONE] Faire les pages clients ou on va voir les factures
-  * Faire les tests sur les droits d'accès
-  * Avec un usagé qui peut seulement faire des INV_OUT RETOUR et RETOUR VIDE sur SES propores factures.
+  * [DONE] Faire les tests sur les droits d'accès
+  * [ISH] Avec un usagé qui peut seulement faire des INV_OUT RETOUR et RETOUR VIDE sur SES propores factures.
   * [DONE] Faire respecter les droits qui sont dans l'admin... ouais.... c'est le gros de l'affaire ça. 
     * Je pense que je me fourre dans le nom des permissions, checker avec l'admin de Django
-  * Meilleur indicateur de sous menu, c'est confondant.
+  * [DONE] Meilleur indicateur de sous menu, c'est confondant.
     * Faire comme les menus de lojiq
-  * Le get total dans la liste de facture par client ne marche pas fuckall tous est à 0
+  * [DONE] Le get total dans la liste de facture par client ne marche pas fuckall tous est à 0
   
 ===== Création de produit ======
  * Ajout de Prix par AJAX
