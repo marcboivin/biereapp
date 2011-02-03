@@ -15,13 +15,13 @@ from biereapp.middleware import GlobalUser
 
 # Setup debugging
 LOG_FILENAME = 'debug.log'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+#logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 def logit(what):
     d = datetime.datetime.now()
     if settings.DEBUG:
         print "logit: " + what
-        logging.debug(d.ctime() + ": " + what)
+        #logging.debug(d.ctime() + ": " + what)
 
 TYPE_TRANS = (
     ('CMD', 'Commande'),

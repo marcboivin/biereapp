@@ -25,6 +25,7 @@ TODO:
     * Dans la liste des clients, mettre juste eux
   * Status pour dire que c'est entrée dans le système comptable
     * View qui indique les factures qui ne sont pas dans le système comptable.
+    * Faire la création de facture avec le nom automatiquement comme la commande
   
 ===== Création de produit ======
  * Ajout de Prix par AJAX
