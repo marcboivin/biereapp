@@ -56,6 +56,7 @@ Options qui sont utilisées par le système
  * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
  * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 
  * Facture inventaire: ID de la facture qui contient l'inventaire pour les ajustements de cet inventaire
+ * Numéro de base: ID de la facture pour ajouter pour afin d'afficher le nom numérode facture
  
  
 ===== Installation =====

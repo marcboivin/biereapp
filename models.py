@@ -42,7 +42,6 @@ TYPE_PRIX = (
 
 class Client(models.Model):
     Nom = models.CharField(max_length=60)
-    Personne = models.CharField(max_length=60)
     def __unicode__(self):
         return self.Nom
         

@@ -499,4 +499,16 @@ form input[type=submit]:after{
     font-size: 1.4em;
 }
 
+#message {
+    color: green;
+    font-size: 16pt;
+    margin: 15px 0;    
+}
+
+#erreurs {
+    color: red;
+    font-size: 16pt;
+    margin: 15px 0;
+}
+
 
