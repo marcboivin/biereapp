@@ -55,6 +55,7 @@ Options qui sont utilisées par le système
  * TVQ: Taux actuel de la TVQ
  * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
  * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 
+ * Facture Inventaire: ID de la facture qui contient l'inventaire pour les ajustements de cet inventaire
  
  
 ===== Installation =====

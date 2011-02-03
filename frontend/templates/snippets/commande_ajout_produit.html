@@ -20,13 +20,14 @@
 	{% else %}
         <div class="errorlist">
             Cette facture est fermée. Vous ne pouvez plus la modifier. Ça inclut aussi ajouter des transactions.
+            Vous pouvez tenter de la <a href="/factures/{{facture.id}}/ouvrir/">réouvrir</a>
         </div>
 	{% endif %}
 	</div>
 </form>
 
 <section class="dans_la_commande">
-    <header><h3>Produits dans la commande</h3><div></div></header>
+    <header><h3>Produits dans la {% if facture.is_client_interne %}commande{%else%} facture{%endif%}</h3><div></div></header>
     <ol>
         {% for t in facture.transactions %}
              <li class="{{t.Type}}"> 
@@ -46,6 +47,8 @@
             <li>Pas de transaction</li>
         {% endfor %}
     </ol>
+    {% if not facture.is_client_interne %}
     <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
     <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>
+    {% endif %}
 </section>

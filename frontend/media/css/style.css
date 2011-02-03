@@ -41,8 +41,9 @@ h2 em  {
 }
 
 h3 {
-    font-size: 18px;
-    margin: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0px;
 }
 
 #page>header {
@@ -61,7 +62,8 @@ h3 {
     height: 65px;
     display: block;
     float: right;
-    width: 537px;
+    position: relative;
+    width: 670px;
 }
 
 #main_menu p {
@@ -74,7 +76,6 @@ h3 {
 	width: 134px;
 	background: transparent;
 	color: #545454;
-	position: relative;
 	text-indent: 10px;
 	line-height: 65px;
 }
@@ -95,10 +96,12 @@ h3 {
 }
 
 #main_menu ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
+    background: transparent;
 	font-size: 18px;
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
 }
 
 #main_menu a {
@@ -112,23 +115,24 @@ h3 {
     background: white;
 }
 
-#main_menu a:hover {
-    background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.41, white), to(#D6D6D6));
+#main_menu > ul > li:hover {
+    background: #B2FF00;
     color: black;
 }
 
 #main_menu li ul li a:hover{
     /*border-top-right-radius: 5px 5px;
     border-bottom-right-radius: 5px 5px; */
-    background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.41, #66cc9a), to(#D6D6D6));
+    background: #6ca830;
 }
 
 #main_menu li ul {
-	position: relative;
-	left: -999em;
-	z-index: 12;
+    background: #b2ff00;
 	height: 56px;
-    width: 500px;
+	left: -999em;
+	position: absolute;
+    width: 670px;
+	z-index: 12;
 }
 
 #main_menu li ul li {
@@ -142,7 +146,7 @@ h3 {
     padding: 0 15px;
     line-height: auto;
     width: auto;
-    background: #66cc9a;
+    background: #b2ff00;
 }
 
 #main_menu li:hover ul {
@@ -406,7 +410,7 @@ form input[type=submit]:after{
     text-decoration: none;
 }
 
-.liste a:hover {
+.liste table a:hover {
     color: white;
     text-decoration: underline;
 }

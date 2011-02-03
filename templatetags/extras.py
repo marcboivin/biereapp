@@ -94,7 +94,7 @@ def facture_summary(number=10, template="default.html"):
     #    return user.show_user_facture(GET)
     
     # Get Facture based on the number needed
-    factures = Facture.objects.all()[0:number]
+    factures = Facture.objects.all().order_by("-Date")[0:number]
     return render_to_string("snippets/facture_summary/"+template, {'factures':factures, 'number': number})    
 
 @register.simple_tag
@@ -124,17 +124,11 @@ def inventaire(produit):
         client_interne = Client.objects.filter(Nom=client_interne)[0:1].get()
     except DoesNotExist:
         client_interne = Client()
-        
-    inventaire_in = Transaction.objects.filter(Type='INV_IN').filter(Prix__Produit=produit)
-    inventaire_out = Transaction.objects.filter(Type='INV_OUT').filter(Prix__Produit=produit)     
-    en_inventaire = get_qte(inventaire_in) - get_qte(inventaire_out)
-    # No Client interne, only opened Facture
-    etudiant = Transaction.objects.filter(Facture__EstFermee=False).filter(Type='CMD').filter(Prix__Produit=produit).exclude(Facture__Client=client_interne.id)
-    # Only client interne and opened Facture
-    fournisseur = Transaction.objects.filter(Facture__EstFermee=False).filter(Prix__Produit=produit).filter(Type='CMD').filter(Facture__Client=client_interne.id)
     
-    tot_etu = get_qte(etudiant)
-    tot_fourn = get_qte(fournisseur)
+    en_inventaire = produit.get_stock()
+    
+    tot_etu = produit.get_commande_etudiant()
+    tot_fourn = produit.get_commande_fournisseur()
         
     return render_to_string('snippets/produit_ligne_inventaire.html', locals())
 
@@ -149,7 +143,6 @@ def get_url_facture(facture):
     url.append('/')
 
     return ''.join(url)
-    
 
 @register.filter(name='monetize')
 @stringfilter    

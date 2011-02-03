@@ -2,7 +2,7 @@
 {% load extras %}
 
 {%block content%}
-<h2>Nouvelle commande</h2>
+<h2>Nouvelle commande {% if client_interne %}fournisseur{% endif %}</h2>
 {% if not created %}
 <form action="/factures/creer/" method="post">
     <header class="form message">

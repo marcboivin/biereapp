@@ -42,18 +42,80 @@ TYPE_PRIX = (
 
 class Client(models.Model):
     Nom = models.CharField(max_length=60)
+    Personne = models.CharField(max_length=60)
     def __unicode__(self):
         return self.Nom
         
     def get_factures(self):
         # ToDo
-        factures = Facture.get.filter(Client=self)
-        return False
+        factures = Facture.objects.filter(Client=self).order_by('-Date')
+        
+        return factures
+        
+    def get_factures_html(self, template="client_factures.html"):
+        factures = self.get_factures()
+        return render_to_string('snippets/'+ template, {'factures': factures})
+    
+    def is_client_interne(self):
+        try:
+            client_interne = Option.get("Client interne")
+            if self.Nom == client_interne:
+                return True
+            else:
+                print "Vraiment pas le client interne"
+                return False
+        except Exception as e:
+            print "Exception donc pas par défaut"
+            print e
+            return False
+        
+        
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+
+
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_client'):
+                    raise Exception("Vous ne pouvez pas changer de Client")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_client'):
+                    raise Exception("Vous ne pouvez pas ajouter de client")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Client, self).save()
+
 
 class Brasseur(models.Model):
     Nom = models.CharField(max_length=60)
     def __unicode__(self):
         return self.Nom
+
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_rasseur'):
+                    raise Exception("Vous ne pouvez pas changer de Brasseur")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_brasseur'):
+                    raise Exception("Vous ne pouvez pas ajouter de Brasseur")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Brasseur, self).save()
 
 class Produit(models.Model):
     Nom = models.CharField(max_length = 60)
@@ -67,6 +129,60 @@ class Produit(models.Model):
         return prix
     def __unicode__(self):
         return self.Brasseur.__unicode__() + ' ' + self.Nom
+        
+    def get_in(self):
+        inventaire_in = Transaction.objects.filter(Type='INV_IN').filter(Prix__Produit=self)
+        retour = Transaction.objects.filter(Type='RETOUR').filter(Prix__Produit=self)
+        return inventaire_in.count() + retour.count()
+        
+    def get_out(self):
+        inventaire_out = Transaction.objects.filter(Type='INV_OUT').filter(Prix__Produit=self)
+        return inventaire_out.count()
+        
+    def get_stock(self):
+        return self.get_in() - self.get_out()
+        
+    def get_commande_etudiant(self):
+        client_interne = Option.get('Client interne')
+        try:
+            client_interne = Client.objects.filter(Nom=client_interne)[0:1].get()
+        except DoesNotExist:
+            client_interne = Client()
+        
+        # No Client interne, only opened Facture
+        etudiant = Transaction.objects.filter(Facture__EstFermee=False).filter(Type='CMD').filter(Prix__Produit=self).exclude(Facture__Client=client_interne.id)
+        return etudiant.count()
+        
+    def get_commande_fournisseur(self):
+        client_interne = Option.get('Client interne')
+        try:
+            client_interne = Client.objects.filter(Nom=client_interne)[0:1].get()
+        except DoesNotExist:
+            client_interne = Client()
+            
+        # Only client interne and opened Facture
+        fournisseur = Transaction.objects.filter(Facture__EstFermee=False).filter(Prix__Produit=self).filter(Type='CMD').filter(Facture__Client=client_interne.id)
+        
+        return fournisseur.count()
+        
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_produit'):
+                    raise Exception("Vous ne pouvez pas changer de Produit")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_produit'):
+                    raise Exception("Vous ne pouvez pas ajouter de Produit")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Produit, self).save()
     
 class Prix(models.Model):
     Note = models.CharField(max_length=140, blank=True)
@@ -79,6 +195,26 @@ class Prix(models.Model):
 
     def __unicode__(self):
         return self.Produit.__unicode__() + ': ' + self.Type + ': ' + str(self.Prix)
+        
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_prix'):
+                    raise Exception("Vous ne pouvez pas changer de Prix")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_prix'):
+                    raise Exception("Vous ne pouvez pas ajouter de Prix")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Prix, self).save()
     
 class Transaction(models.Model):
     Prix = models.ForeignKey('Prix', blank=True, null=True)
@@ -198,14 +334,23 @@ class Transaction(models.Model):
     def save(self):
         # Can we have a global user that we could put here,  without having it passed
         # as a parameter
-        # ToDo: Vildate the fields based on the transaction type
         try:
             self.User = GlobalUser.user
+            
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_transation'):
+                    raise Exception("Vous ne pouvez pas ajouter de Transaction")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_transation'):
+                    raise Exception("Vous ne pouvez pas ajouter de Transaction")
+                    return False
+            
         except NameError:
             raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
         
         if not self.User.has_perm('Transaction.'+self.Type):
-            raise Exception(u"Vous ne pouvez pas sauvegarder ce genre de transaction, désoler")
+            raise Exception(u"Vous ne pouvez pas sauvegarder ce genre de transaction, désoler: " + self.Type)
             return False
         
         # Call the parent method    
@@ -299,6 +444,29 @@ class Facture(models.Model):
         
         return tot
         
+    def is_client_interne(self):
+        return self.Client.is_client_interne()
+        
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_facture'):
+                    raise Exception("Vous ne pouvez pas changer de Facture")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_facture'):
+                    raise Exception("Vous ne pouvez pas ajouter de Facture")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Facture, self).save()
+        
     class Meta:
         permissions = (
             ("creer", "Peut creer des factures"),
@@ -313,17 +481,35 @@ class Option(models.Model):
     
     @staticmethod
     def get(option):
-        print 'Option: ' + option
         try:
              valeur = Option.objects.filter(Nom=option)[0:1].get()
         except DoesNotExist:
-            print "option does not exist"
             return ''
-        print valeur.Valeur
         return valeur.Valeur
          
     def __unicode__(self):
         return self.Nom + ': ' + self.Valeur
+
+    def save(self):
+        # Can we have a global user that we could put here,  without having it passed
+        # as a parameter
+        try:
+
+            if self.id:
+                if not GlobalUser.user.has_perm('biereapp.change_option'):
+                    raise Exception("Vous ne pouvez pas changer d'Option")
+                    return False
+            else:
+                if not GlobalUser.user.has_perm('biereapp.add_option'):
+                    raise Exception("Vous ne pouvez pas ajouter d'Option")
+                    return False
+
+        except NameError:
+            raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
+
+        # Call the parent method    
+        super(Option, self).save()        
+
     class Meta:
         ordering = ('-Date', 'Nom')
         

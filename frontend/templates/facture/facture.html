@@ -2,10 +2,10 @@
 {% load extras %}
 
 {%block content%}
-<h2>Commande: {{facture.note}}</h2>
+<h2>{{facture.Note}}</h2>
 
 <header class="form message">
-    <header class="etapes">Gestion de la facture<div></div></header>
+    <header class="etapes">Gestion de la {% if facture.is_client_interne %}commande{%else%} facture{%endif%}<div></div></header>
     <section class="info_text content">Cette commande existe. Vous pouvez donc, lui ajouter des produits, voir ce qui se passe avec et lui donner du chocolat chaud.</section>
     <div class="clearer"></div>
 </header>

@@ -13,7 +13,7 @@
              <small>{{t.Note}}</small> 
              
              {% if t.Qte %}x{{t.Qte}}{% endif %}
-             <span class="price">{{t.get_total|monetize}}</span>
+             <span class="price">{% if t.Facture.is_client_interne%} — {%else%} {{t.get_total|monetize}} {%endif%}</span>
         </li>
 
      {% empty %}
@@ -21,6 +21,7 @@
      {% endfor %}
  </ol>
  
+ {% if not facture.is_client_interne %}
  <ol class="taxes">
  {% for key, value in facture.get_taxes %}
      <li class="{{key}}">{{ key }} <span class="price">{{ value|monetize }}</span></li>
@@ -28,3 +29,4 @@
 </ol>
  <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
  <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>
+ {% endif %}

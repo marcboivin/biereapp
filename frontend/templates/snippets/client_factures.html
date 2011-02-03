@@ -1,0 +1,39 @@
+{% load extras %}
+
+<div class="liste">
+    Nombre total de facture: {{factures.count}}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Note</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in factures%}
+                <tr>
+                    <td><a href="/factures/{{f.id}}">{{f.id}}</a></td>
+                    <td>{{f.date|date:"D d M Y"}}</td>
+                    <td>{{f.Note}}</td>
+                    <td>
+                    {% if f.is_client_interne %}
+                        —
+                    {% else %}
+                        {{f.total|monetize}}
+                    {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>—</td>
+                    <td>Pas de facture</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>

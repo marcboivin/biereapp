@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load extras %}
 <div class="liste">
     <table class="factures">
         <tr>
@@ -15,7 +16,7 @@
                         <td class="id"><a href="/factures/{{facture.id}}/">{{facture.id}}</a></td>
                         <td class="client">{{facture.Client}}</td>
                         <td class="date">{{facture.Date|naturalday }}</td>
-                        <td class="total">{{facture.total}}</td>
+                        <td class="total">{% if not facture.is_client_interne %}{{facture.total|monetize}}{% endif %}</td>
                         <td class="note">{{facture.Note}}</td>
                     </tr>
                 {% endfor %}

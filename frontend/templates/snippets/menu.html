@@ -1,7 +1,7 @@
 <menu id="main_menu">
     {% if user.is_authenticated %}
     <ul>
-        <li><a href="">Factures</a>
+        <li><a href="/factures/liste/">Factures</a>
             <ul>
                 <li><a href="/factures/creer/">Nouvelle</a></li>
                 <li><a href="/factures/liste/">Liste</a></li>
@@ -9,31 +9,27 @@
             </ul>
         </li>
         <li>
-            <a href="#">Client</a>
+            <a href="/clients/liste/">Client</a>
             <ul>
                 <li><a href="/clients/creer/">Nouveau</a></li>
                 <li><a href="/clients/liste/">Liste</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">Produits</a>
+            <a href="/produits/liste/">Produits</a>
             <ul>
                 <li><a href="/produits/creer">Nouveau</a></li>
                 <li><a href="/produits/liste/">Liste</a></li>
-                <li><a href="/produits/inventaire/">Inventaire</a></li>
-
             </ul>
         </li>
         
         <li>
-            <!--
-            <a href="#">Admin</a>
+            <a href="#">Stock</a>
             <ul>
-                <li><a href="#">Produits en commande</a></li>
-                <li><a href="#">Liste des Prix</a></li>
+                <li><a href="/produits/inventaire/">Inventaire</a></li>
+                <li><a href="/commandes/">Commande</a></li>
                 <li><a href="#">Dernières actions</a></li>
             </ul>
-            -->
         </li>
         <li>
             <a href="/accounts/logout/">Déconnexion</a>

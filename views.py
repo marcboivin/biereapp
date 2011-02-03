@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseRedirect, Http404
 from django.core.cache import cache
 from django.template.loader import get_template
 from django.shortcuts import render_to_response
@@ -9,9 +9,10 @@ from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMultiAlternatives
-#from io.exceptions import IOPasswordProtected
-#from io import signals
-from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option
+
+from datetime import date, datetime
+
+from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option, Client
 from biereapp import models
 
 from biereapp.models import logit
@@ -21,7 +22,7 @@ def Dashboard(request):
     return render_to_response('dashboard.html', { 'user': request.user })
     
 @login_required
-def CreerCommande(request):
+def CreerFacture(request):
     created = False
     facture = False
     # There is a new commande to create
@@ -100,6 +101,14 @@ def NewClient(request):
 @login_required
 def FactureDetails(request, facture_id):
     facture = Facture.objects.get(id = facture_id)
+    client_interne = False
+    
+    try:
+        client = Option.get('Client interne')
+        if facture.Client.Nom == client:
+            client_interne = True
+    except:
+        client_interne = False
 
     return render_to_response('facture/details.html', {'facture': facture})
     
@@ -126,6 +135,8 @@ def FactureFermer(request, facture_id):
     facture = False
     if facture_id > 0:
         facture = Facture.objects.get(id=facture_id)
+    else: 
+        raise Http404
 
     if facture:
         # Wasn't closed before, so we send the mail
@@ -142,10 +153,23 @@ def FactureFermer(request, facture_id):
             msg.attach_alternative(mail_message, "text/html")
             msg.send()
             
-            
-        facture.EstFermee = True
+            facture.EstFermee = True
+            facture.save()
+    
+    return HttpResponseRedirect('/factures/'+str(facture.id)+'/')  
+
+@login_required    
+def FactureInFermer(request, facture_id):
+      
+    facture = False
+    if facture_id > 0:
+        facture = Facture.objects.get(id=facture_id)
+    else:
+        raise Http404
+        
+    if facture:
+        facture.EstFermer = False
         facture.save()
-        facture.EstFermee
     
     return HttpResponseRedirect('/factures/'+str(facture.id)+'/')  
     
@@ -153,5 +177,35 @@ def FactureFermer(request, facture_id):
 def ProduitInventaire(request):
     liste_produits = Produit.objects.all().order_by('Brasseur', 'Nom')
     return render_to_response('produits/inventaire.html', {'produits': liste_produits}) 
+    
+@login_required
+def CommandeFournisseur(request):
+    # Try to get the Client interne Option
+    try:
+        client = Option.get('Client interne')
+        client = Client.objects.filter(Nom = client)[0:1].get()
+    except:
+        raise Exception("Impossible de faire une commande fournisseur sans l'option Client interne ")
+    
+    facture = Facture()
+    d = datetime.today()
+    facture.Note = "Commande fournisseur du " + str(d.year) +'/'+ str(d.month) +'/'+ str(d.day)
+    facture.Client = client
+    facture.save()
+    print "Est-ce le client interne? "
+    print facture.is_client_interne()
+    
+    return render_to_response('facture/facture.html', {'facture': facture })
+    
+@login_required
+def Commande(request):
+    # Try to get the Client interne Option
+    try:
+        client = Option.get('Client interne')
+        client = Client.objects.filter(Nom = client)[0:1].get()
+    except:
+        raise Exception("Impossible de faire une commande fournisseur sans l'option Client interne ")
+    
+    return render_to_response('clients/client.html', {'client': client})
         
     

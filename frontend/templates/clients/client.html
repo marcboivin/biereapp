@@ -1,2 +1,11 @@
 {% extends "base.html"%}
 
+{% block content %}
+    <h2>Profile de {{client.Nom}}</h2>
+    {% if client.is_client_interne %}
+        <a href="/commandes/creer/" class="add">Créer une commande</a>
+    {% endif %}
+    
+    {{ client.get_factures_html }}
+    
+{% endblock %}

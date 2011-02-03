@@ -3,7 +3,7 @@ from django.contrib.auth.views import login, logout
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from biereapp import settings
-from biereapp.views import Dashboard, CreerCommande, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, ProduitInventaire
+from biereapp.views import Dashboard, CreerFacture, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, ProduitInventaire, FactureInFermer, CommandeFournisseur, Commande
 from biereapp.models import Facture, Produit, Client
 
 admin.autodiscover()
@@ -18,15 +18,15 @@ liste_client = {
 single_client = {
     'queryset': Client.objects.all(),
     'template_name': 'clients/client.html',
-    'template_object_name': 'facture',
+    'template_object_name': 'client',
 }
 
-liste_commande = {
+liste_factures = {
     'template_name': 'facture/liste.html',
     'queryset' : Facture.objects.order_by('-Date')
 }
 
-single_commande = {
+single_facture = {
     'queryset': Facture.objects.all(),
     'template_name': 'facture/facture.html',
     'template_object_name': 'facture',
@@ -47,8 +47,8 @@ single_produit = {
 urlpatterns = patterns('django.views.generic',
     (r'^clients/liste/', 'list_detail.object_list', liste_client),     
     (r'^clients/(?P<object_id>\d+)/$', 'list_detail.object_detail', single_client),
-    (r'^factures/liste/', 'list_detail.object_list', liste_commande),  
-    (r'^factures/(?P<object_id>\d+)/$', 'list_detail.object_detail', single_commande),   
+    (r'^factures/liste/', 'list_detail.object_list', liste_factures),  
+    (r'^factures/(?P<object_id>\d+)/$', 'list_detail.object_detail', single_facture),   
     (r'^produits/liste/', 'list_detail.object_list', liste_produit),     
     (r'^produits/(?P<object_id>\d+)/$', 'list_detail.object_detail', single_produit),   
 )
@@ -59,14 +59,17 @@ urlpatterns += patterns('',
     (r'^accounts/login/$', login),
     (r'^accounts/logout/$', logout),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
-    (r'^factures/creer/$', CreerCommande),
+    (r'^factures/creer/$', CreerFacture),
     (r'^factures/produit/ajout/$', AddUserTransation), 
     (r'^produits/creer/$', NewProduit),
     (r'^clients/creer/$', NewClient),
     (r'^factures/(?P<facture_id>\d+)/details/$', FactureDetails),
     (r'^factures/(?P<facture_id>\d+)/fermer/$', FactureFermer),
+    (r'^factures/(?P<facture_id>\d+)/ouvrir/$', FactureInFermer),
     (r'^produits/(?P<object_id>\d+)/add/$', AddPrixProduit),
     (r'^produits/inventaire/$', ProduitInventaire),
+    (r'^commandes/creer/$', CommandeFournisseur),
+    (r'^commandes/$', Commande),
     (r'^$', Dashboard),
 
 
