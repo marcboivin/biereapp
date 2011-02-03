@@ -130,11 +130,20 @@ class Produit(models.Model):
     def get_in(self):
         inventaire_in = Transaction.objects.filter(Type='INV_IN').filter(Prix__Produit=self)
         retour = Transaction.objects.filter(Type='RETOUR').filter(Prix__Produit=self)
-        return inventaire_in.count() + retour.count()
+        tot = 0
+        for i in inventaire_in:
+            tot += i.Qte
+        for r in retour:
+            tot += r.Qte
+
+        return tot
         
     def get_out(self):
         inventaire_out = Transaction.objects.filter(Type='INV_OUT').filter(Prix__Produit=self)
-        return inventaire_out.count()
+        tot = 0
+        for o in inventaire_out:
+            tot += o.Qte
+        return tot
         
     def get_stock(self):
         return self.get_in() - self.get_out()

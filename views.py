@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMultiAlternatives
 
+from math import fabs
 from datetime import date, datetime
 
 from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option, Client
@@ -192,8 +193,6 @@ def CommandeFournisseur(request):
     facture.Note = "Commande fournisseur du " + str(d.year) +'/'+ str(d.month) +'/'+ str(d.day)
     facture.Client = client
     facture.save()
-    print "Est-ce le client interne? "
-    print facture.is_client_interne()
     
     return render_to_response('facture/facture.html', {'facture': facture })
     
@@ -207,5 +206,47 @@ def Commande(request):
         raise Exception("Impossible de faire une commande fournisseur sans l'option Client interne ")
     
     return render_to_response('clients/client.html', {'client': client})
+    
+@login_required
+def AJAX_AddInventaire(request):
+    if(request.POST):
+        erreur = []
+        try:
+            facture = Option.get('Facture inventaire')
+            facture = Facture.objects.get( id=int(facture) )
+        except:
+            erreur.append ("L'option Facture inventaire n'existe pas, vous ne pouvez faire de mise à jour de l'inventaire")
+            
+        try:
+            prix = request.POST['Produit']
+            prix = Produit.objects.get(id = prix)
+            prix = Prix.objects.filter(Produit=prix)[0:1].get()
+        except:
+            erreur.append("Impossible d'identifier le produit")
+            
+        try:    
+            qte = int(request.POST['Qte'])
+        except:
+            erreur.append("la quantité n'est pas une chiffre valide")
+            
+        if len(erreur) > 0:
+            return render_to_response('ajax/ajust_qte.js', {'erreur': erreur})
+            
+        t = Transaction()
+        t.Facture = facture
+        t.Prix = prix
+        if qte < 0:
+            t.Type = "INV_OUT"
+        else:
+            t.Type = "INV_IN"
+        t.Qte = abs(qte)
+        t.save()
+        
+        return render_to_response('ajax/ajust_qte.js', {'trans': t})
+        
+    else:
+        raise Http404();
+        
+        
         
     
