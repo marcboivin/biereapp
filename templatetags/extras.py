@@ -104,19 +104,15 @@ def facture_summary(number=10, template="default.html"):
 
 @register.simple_tag
 def list_prix(produit):
-    if type(produit) is not int:
-        return False
     
     qs = Prix.objects.filter(Produit=produit)
     
     return render_to_string("snippets/liste_prix_produit.html", {'prix': qs})
 
 @register.simple_tag
-def prix_form(produit_id):
-    if type(produit_id) is not int:
-        return False
+def prix_form(produit):
         
-    return PrixForm({'Produit': produit_id}).as_ul()
+    return PrixForm({'Produit': produit.id}).as_ul()
     
 @register.simple_tag
 def inventaire(produit):

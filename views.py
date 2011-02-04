@@ -237,7 +237,7 @@ def AJAX_AddInventaire(request):
             facture = Option.get('Facture inventaire')
             facture = Facture.objects.get( id=int(facture) )
         except:
-            erreur.append ("L'option Facture inventaire n'existe pas, vous ne pouvez faire de mise à jour de l'inventaire")
+            erreur.append (u"L'option Facture inventaire n'existe pas, vous ne pouvez faire de mise à jour de l'inventaire")
             
         try:
             print request.POST['Produit']
@@ -251,7 +251,7 @@ def AJAX_AddInventaire(request):
         try:    
             qte = int(request.POST['Qte'])
         except:
-            erreur.append("la quantité n'est pas une chiffre valide")
+            erreur.append(u"la quantité n'est pas une chiffre valide")
             
         if len(erreur) > 0:
             return render_to_response('ajax/ajust_qte.js', {'erreur': erreur})

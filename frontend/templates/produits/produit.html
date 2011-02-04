@@ -5,14 +5,14 @@
     <h2>{{produit.Brasseur.Nom}} {{produit.Nom}}</h2>
     <div class="consigne">Consigne pour une unité: <span>{{produit.Consigne|monetize}}</span></div>
     <h3>Liste des prix</h3>
-    {% list_prix produit.id %}
+    {% list_prix produit %}
     <h3>Ajouter un prix</h3>
     <form action="/produits/{{produit.id}}/add/" method="post" >
         <ul>
         {% if prix %}
             {{ prix.as_ul }}
         {% else %}
-            {% prix_form produit.id %}
+            {% prix_form produit %}
         {% endif %}
          <li><input type="submit" value="Ajouter de prix &rarr;" /></li>
         </ul>
