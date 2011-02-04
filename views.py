@@ -49,16 +49,16 @@ def CreerFacture(request):
             created 	        = True
             facture				= bill
     else:
-        if request.GET['client']: 
-            try:
+        try:
+            if request.GET['client']: 
                 id = int(request.GET['client'])
-                print id
                 factureform = FactureForm(initial={'Client': id})
-            except Exception as e:
+            else: 
+                factureform = FactureForm()
+        except Exception as e:
                 print e
                 factureform = FactureForm()
-        else: 
-            factureform = FactureForm()
+
         facture 	= Facture() 
         commande    = False
         produits    = False

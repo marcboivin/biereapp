@@ -1,6 +1,7 @@
 {% load extras %}
 <div class="prix">
     <ul class="liste_prix_produit">
+        {% if prix %}
         {% for p in prix %}
              <li class="{{p.Type}}"> 
                  <span class="type">{{p.Type}}</span>
@@ -9,6 +10,9 @@
             </li>
         {% empty %}
             <li>Pas de prix pour ce produit</li>
-        {% endfor %}    
+        {% endfor %}
+        {% else %}
+            <li>Pas de prix pour ce produit</li>
+        {% endif %}    
     </ul>
 </div>
