@@ -105,7 +105,7 @@ def facture_summary(number=10, template="default.html"):
 @register.simple_tag
 def list_prix(produit):
     if type(produit) is not int:
-        return false
+        return False
     
     qs = Prix.objects.filter(Produit=produit)
     
@@ -127,7 +127,7 @@ def inventaire(produit):
     client_interne = Option.get('Client interne')
     try:
         client_interne = Client.objects.filter(Nom=client_interne)[0:1].get()
-    except DoesNotExist:
+    except:
         client_interne = Client()
     
     en_inventaire = produit.get_stock()
