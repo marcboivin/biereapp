@@ -114,7 +114,7 @@ def list_prix(produit):
 @register.simple_tag
 def prix_form(produit_id):
     if type(produit_id) is not int:
-        return false
+        return False
         
     return PrixForm({'Produit': produit_id}).as_ul()
     
