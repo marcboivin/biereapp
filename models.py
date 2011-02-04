@@ -348,7 +348,7 @@ class Transaction(models.Model):
             if client:
                 if self.Facture.Client != client:
                     raise Exception("Vous ne pouvez pas faire cette action, méchant garnement, hors d'ici!")
-                    return false
+                    return False
                     
             if not GlobalUser.user.has_perm('biereapp.add_transaction'):
                 raise Exception("Vous ne pouvez pas ajouter de Transaction")
@@ -476,7 +476,7 @@ class Facture(models.Model):
             if client:
                 if self.Client != client: 
                     raise Exception("Vous ne pouvez pas faire cette action, méchant garnement, hors d'ici!")
-                    return false
+                    return False
 
         except NameError:
             raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
