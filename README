@@ -1,53 +1,77 @@
-L'appliation doit rouler dans le root de l'adresse web, i.e.: example.com et non example.com/biereapp
+L'application doit rouler dans le root de l'adresse web, i.e.: example.com et non example.com/biereapp
 
 Dans le système:
-  * Pour créer des produits utilisable par le système il faut: Créer un brasseur, lui créer un produit et 
-    lui créer un prix accessible par l'utilisateur en cours.
-    
-  * Quand on fait un paiemnt, le produit est paiment
+  * Pour créer des produits utilisables par le système il faut: créer un brasseur, lui créer un produit et 
+    lui créer un prix.
   
-  * Les retour de vide sont fait en proportion du produit. Si on a un produit qui est une caisse de 24
-    le retour de 4 bière est donc 4/24 du produit. C-à-d: 0.16. La consigne est arrondi à la hausse automatiquement. 
+  * Les retours de vide sont faits en proportion du produit. Si on a un produit qui est une caisse de 24
+    le retour de 4 bières est donc 4/24 du produit. C.-à-d.: 0.16. La consigne est arrondie à la hausse automatiquement. 
     
   * Les prix ne peuvent être entrés avec une virgule i.e.: 2,90 il faut un point i.e.: 2.90
     
     
     
-Commante marche l'outil:
+Comment marche l'outil:
 
-Afin de pouvoir faire des factures il faut absolument avoir au moins un brasssur, un produit et un prix.
+Afin de pouvoir faire des factures, il faut absolument avoir au moins un brasseur, un produit, un prix et un client.
 
 ===== Brasseurs =====
-Les brasseurs sont simplement des identifiants à qui on attribu des produits. Il n'y à pas d'autre information à leur sujet. 
+Les brasseurs sont simplement des identifiants à qui on attribue des produits. Il n'y à pas d'autre information à leur sujet. 
 Un brasseur est la base du système, sans au moins un brasseur, il est impossible de faire quoi que ce soit avec le système.
 
 ===== Produits =====
-Les produits désigne les produits qu'un brasseur offre. Le système est fait pour qu'un produit ait la quatité dans son nom. 
+Les produits désignent les produits qu'un brasseur offre. Le système est fait pour qu'un produit ait la quantité dans son nom. 
 Si on veut avoir de la blanche en caisse de 24, on appel le produit: Blanche, Caisse de 24. il n'y à pas de gestion des 
-quantité dans l'outil. On peut, par contre, commander des fration de produit. 
+quantités dans l'outil. On peut, par contre, commander des fractions de produit. 
 
-Ce qui veut dire que s'il n'y a que le produit Blanche, caisse de 24 et qu'on veut faireun commande pour 12 blanches, on peut
+Ce qui veut dire que s'il n'y a que le produit Blanche, caisse de 24 et qu'on veut faire une commande pour 12 blanches, on peut
 entrer une quantité de 0.5 dans la commande. Même chose pour les retours. 
 
 ===== Les prix =====
-Les prix sont attribués à des produits. Il y a 3 type de prix: Coûtant, Affiché et spécial. Uun produit peut avoir autant de prix
+Les prix sont attribués à des produits. Il y a 3 types de prix: coûtant, affiché et spécial. Un produit peut avoir autant de prix
 que l'utilisateur qui les crée veut en faire. Il y a un champ note pour permettre de distinguer les prix de la même catégorie
 
 
 ==== Client =====
-Les clients sont des identifiant pour les gens à qui ont fait des factures. Il est possible d'utiliser les clients et les factures
+Les clients sont des identifiants pour les gens à qui ont fait des factures. Il est possible d'utiliser les clients et les factures
 pour gérer les commandes aux fournisseurs de l'AEP, mais ce n'est pas prévu au système pour le moment.
 
 ===== Factures =====
-L'outil permet de faire de facture. Une facture est, en quelque sorte, un logue des activités sur une activitée:
- * On fait une commandede produit, à ce moment, les produits ne sont pas charchés
- * Le produits sortent de l'inventaire, il sont chargés à la facture et la consigne est cumulé
- * Des produits sont rapportés, ils sont retiré de la facture
- * Les produits vide consignés sont retirés de la consigne à payer
+L'outil permet de faire de facture. Une facture est, en quelque sorte, un logue des activités sur une activité:
+ * On fait une commande de produits, à ce moment, les produits ne sont pas chargés
+ * Le produit sort de l'inventaire, il est chargé à la facture et la consigne est cumulée
+ * Des produits sont rapportés, ils sont retirés de la facture
+ * Les produits vides consignés sont retirés de la consigne à payer
  * La facture est fermée. 
- * Dans le détails d'uns facture, le Sous-total est toujours sans les rabais, parce que peu importe, les taxes sont payés sans rabais.
+ * Dans le détail d'une facture, le Sous-total est toujours sans les rabais, parce que peu importe, les taxes sont toujours applicables sans rabais.
  
-On peut aussi appliquer des rabais à une facture
+On peut aussi appliquer des rabais ou un crédit à une facture. La différence entre les 2 est simplement dans la sémantique. 
+
+Pour identifier une facture au nom de quelqu'un, on peut utiliser le Champs Événemnet ou raison, 
+i.e.: Si la commande de l'événement Beuverie Intense, organiser par Poly-Impro, est faite par Marc Boivin, le champ événement se lit comme suit: 
+Beuverie Intense 2011 (Marc Boivin)
+Pas plus compliqué que ça.
+
+===== Gestion de l'inventaire =====
+Il y a 2 manières d'ajuster l'inventaire:
+ * En utilisant la section Inventaire sous le menu stock et en ajustant manuellement
+l'inventaire. 
+ * En faisant le suivi des commandes fournisseurs (aussi sous le menu stock), C.-à-d.: Entrée les commandes faites aux fournisseurs et ce qui a été reçu.
+ 
+ Les 2 méthodes peuvent coexister.
+
+Les unités en commandes pour les étudiants et les fournisseurs utilisent que les factures non fermées.
+
+
+====== Utilisateur restreint ======
+Si un nom d'utilisateur est le même qu'un nom de client, l'utilisateur est restreint, c'est automatique.
+Un utilisateur restreint ne peut que créer des factures et ajouter des transactions sur les items qui sont liés
+à son client. De plus, la création de facture est automatique, les titres sont sous la forme "Facture date_courrante"
+
+Il y a un mini bug sur ces utilisateurs, il faut leur donner les change rights ainsi que les add rights sur les transactions 
+et les factures sinon ça bug
+
+Autre mini bug: Si un usager restreint essaie de faire une facture à un autre usagé, ça lui en fait une. Son problème, mais bon.
 
 ===== Options =====
 Options qui sont utilisées par le système
@@ -56,9 +80,10 @@ Options qui sont utilisées par le système
  * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
  * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 
  * Facture inventaire: ID de la facture qui contient l'inventaire pour les ajustements de cet inventaire
- * Numéro de base: ID de la facture pour ajouter pour afin d'afficher le nom numérode facture
- 
- 
+ * Numéro de base: ID de la facture pour ajouter pour afin d'afficher le nom numéro de facture
+ Pour modifier une option, il est préférable d'en ajouter une. Si la TVQ change pour 9.5% il suffit d'ajouter une option TVQ 
+ avec la valeur 0.095. Remplacer la TVQ actuelle va occasionner des comportements non voulus dans le système.
+
 ===== Installation =====
  * Créer les usagés avec leur perissions respectives:
    * Admin: tous les pouvoir
@@ -66,34 +91,7 @@ Options qui sont utilisées par le système
    * Commis bière: Peut ajouter des transactions du type: Retour, Retour Vide, Commande Out
  * Créer le site dans l'admin parce qu'on utilise le Site app
  * Créer les Options utilisées par le système
- 
-===== Gestion de l'inventaire =====
-Ma vision de la gestio nde l'inventaire est qu'au départ le client internet ai un facture dont la note est «Ajustement d'inventaire»
-Tout ce qu'il y a dans se truc c'est des INV_IN (Inventaire In) pour mettre le stock à jour. Comme ça supporte les nombre négatifs
-il est possible de faire des ajustements d'inventaires des 2 côté. Ce qui permet d'avoir un suivi des mouvements dans les inventaires.
 
-Ensuite, quand on fait une commande, il suffit de créer des factures avec les unités en commande et entrer les inventaires in (INV_IN)
-par la suite. Quand la commande est entrée, il faut fermer la facture.
-
-Les unités en commandes pour les étudiants et les fournisseur utilisent que les factures non fermées.
-
-L'inventaire ne gère pas les retour pour le moment
-
-====== Utilisateur restreint ======
-Si un nom d'utilisateur est le même qu'un nom de client, l'utilisateur est restrint, c'est automatique.
-Un utilisateur restreint ne peut que créer des factures et ajouter des transactions sur les items qui sont liés
-à son client. De plus, la création de facture est automatique, les titres sont sous la forme "Facture date_courrante"
-
-Il y a un mini bug sur ces utilisateurs, il faut leur donner les change rights ainsi que les add rights sur les transactions 
-et les factures sinon sa bug
-
-Autre mini bug: Si un usagé restreint essai de faire une facture à un autre usagé, ça lui en fait une. Son problème, mais bon.
-
-
-===== Possible ToDo =====
- * Rendre les tables triable par Javascript: Filtre, order, etc.
- * Plus de rapport sur les données
- * Il manque un outil d'overview des factures. Il faudrait lister les factures sur les clients
  
 
  

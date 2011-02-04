@@ -42,7 +42,7 @@ TODO:
 
 
 Avec le modèle de données que j'utilise présentement on peut faire des produits 
-générique et utiliser le champ note des prix pour donner une quantité. Mais c'est pas prévu
+génériques et utiliser le champ note des prix pour donner une quantité. Mais c'est pas prévu
 comme ça alors ça serait pas super trop comme gestion, mais on pourrait avoir: 
 
 Molson Dry <-- Produit
@@ -56,3 +56,8 @@ Si on utilise cette solution il faut que j'applique la gestion des accès qui
 est sur les produits, sur les prix. Ça se fait, mais faut prendre un descision. 
 
 Ok non finalement le contrôle est déjà sur le prix. Good job marc :P
+
+===== Possible ToDo =====
+ * Rendre les tables triable par Javascript: Filtre, order, etc.
+ * Plus de rapport sur les données
+ * Il manque un outil d'overview des factures. Il faudrait lister les factures sur les clients
