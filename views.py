@@ -13,7 +13,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from math import fabs
 from datetime import date, datetime
 
-from biereapp.models import FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option, Client
+from biereapp.models import BiereUser, FactureForm, Facture, CommandeProduitForm, Transaction, Prix, ProduitForm, Produit, TransactionForm, ClientForm, PrixForm, Option, Client
 from biereapp import models
 
 from biereapp.models import logit
@@ -26,6 +26,19 @@ def Dashboard(request):
 def CreerFacture(request):
     created = False
     facture = False
+    # Special case for restricted users, see README for more
+    user = BiereUser.as_current_user()
+    client = user.is_restricted_user()
+    if client:
+        facture = Facture()
+        facture.Client = client
+        d = datetime.today()
+        facture.Note = "Facture du " + str(d.year) +'/'+ str(d.month) +'/'+ str(d.day)
+        facture.save()
+        
+        return HttpResponseRedirect('/factures/'+ str(facture.id)+'/')
+        
+        
     # There is a new commande to create
     if request.method == 'POST':
         factureform = FactureForm(request.POST)
@@ -36,7 +49,16 @@ def CreerFacture(request):
             created 	        = True
             facture				= bill
     else:
-        factureform = FactureForm()
+        if request.GET['client']: 
+            try:
+                id = int(request.GET['client'])
+                print id
+                factureform = FactureForm(initial={'Client': id})
+            except Exception as e:
+                print e
+                factureform = FactureForm()
+        else: 
+            factureform = FactureForm()
         facture 	= Facture() 
         commande    = False
         produits    = False

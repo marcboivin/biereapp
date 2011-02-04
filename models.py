@@ -342,21 +342,25 @@ class Transaction(models.Model):
         try:
             self.User = GlobalUser.user
             
-            if self.id:
-                if not GlobalUser.user.has_perm('biereapp.change_transation'):
-                    raise Exception("Vous ne pouvez pas ajouter de Transaction")
-                    return False
-            else:
-                if not GlobalUser.user.has_perm('biereapp.add_transation'):
-                    raise Exception("Vous ne pouvez pas ajouter de Transaction")
-                    return False
+            # Get Facture based on the number needed
+            user = BiereUser.as_current_user()
+            client = user.is_restricted_user()
+            if client:
+                if self.Facture.Client != client:
+                    raise Exception("Vous ne pouvez pas faire cette action, méchant garnement, hors d'ici!")
+                    return false
+                    
+            if not GlobalUser.user.has_perm('biereapp.add_transaction'):
+                raise Exception("Vous ne pouvez pas ajouter de Transaction")
+                return False
+                    
+            if not GlobalUser.user.has_perm('biereapp.'+self.Type):
+                raise Exception(u"Vous ne pouvez pas sauvegarder ce genre de transaction, désoler: " + self.Type)
+                return False
+
             
         except NameError:
             raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
-        
-        if not self.User.has_perm('Transaction.'+self.Type):
-            raise Exception(u"Vous ne pouvez pas sauvegarder ce genre de transaction, désoler: " + self.Type)
-            return False
         
         # Call the parent method    
         super(Transaction, self).save()
@@ -465,6 +469,14 @@ class Facture(models.Model):
                 if not GlobalUser.user.has_perm('biereapp.add_facture'):
                     raise Exception("Vous ne pouvez pas ajouter de Facture")
                     return False
+                    
+            # Get Facture based on the number needed
+            user = BiereUser.as_current_user()
+            client = user.is_restricted_user()
+            if client:
+                if self.Client != client: 
+                    raise Exception("Vous ne pouvez pas faire cette action, méchant garnement, hors d'ici!")
+                    return false
 
         except NameError:
             raise Exception(u"Erreur fatale, le Middleware GlobalUser n'est pas actif, impossible de faire des sauvegardes.") 
@@ -525,6 +537,15 @@ class FactureForm(forms.ModelForm):
         
 # Proxy model for User
 class BiereUser(User):
+    @staticmethod
+    def as_current_user():
+        try:
+            u = BiereUser.objects.get(id=GlobalUser.user.id)
+            return u
+        except:
+            # Empty user
+            return BiereUser()
+        
     class Meta:
         proxy = True
     # Returns all the facture, 
@@ -566,7 +587,14 @@ class BiereUser(User):
             bills = paginator.page(paginator.num_pages)
             
         return render_to_string('snippets/user_facture.html', {'paged_factures': bills, 'user': self, 'nb_fact_tot': number, 'nb_fact_fermee': number_fermee})
-        
+    def is_restricted_user(self):
+
+        try:
+            # We return the client, more efficient, enventhough misleading
+            client = Client.objects.filter(Nom=self.username)[0:1].get()
+            return client
+        except:
+            return False
 class ProduitForm(forms.ModelForm):
     class Meta:
         model = Produit

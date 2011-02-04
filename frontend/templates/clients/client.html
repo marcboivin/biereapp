@@ -4,6 +4,8 @@
     <h2>Profile de {{client.Nom}}</h2>
     {% if client.is_client_interne %}
         <a href="/commandes/creer/" class="add">Créer une commande</a>
+    {% else %}
+        <a href="/factures/creer/?client={{client.id}}" class="add">Créer une facture</a>
     {% endif %}
     
     {{ client.get_factures_html }}

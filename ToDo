@@ -23,9 +23,8 @@ TODO:
   * Les usagés qui ont un client à leur nom, faut filtrer les facture pour montrer juste les leurs.
     * Partout afficher juste leur fature
     * Dans la liste des clients, mettre juste eux
-  * Status pour dire que c'est entrée dans le système comptable
-    * View qui indique les factures qui ne sont pas dans le système comptable.
     * Faire la création de facture avec le nom automatiquement comme la commande
+  * [DONE] Avoir une option get pour dire le nom du client quand on fait une facture comme ça on peut faire des facture à partir de la page client
   
 ===== Création de produit ======
  * Ajout de Prix par AJAX

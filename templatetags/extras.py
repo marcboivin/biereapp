@@ -94,7 +94,12 @@ def facture_summary(number=10, template="default.html"):
     #    return user.show_user_facture(GET)
     
     # Get Facture based on the number needed
-    factures = Facture.objects.all().order_by("-Date")[0:number]
+    user = BiereUser.as_current_user()
+    client = user.is_restricted_user()
+    if client:
+        factures = Facture.objects.filter(Client=client).order_by("-Date")[0:number]
+    else:
+        factures = Facture.objects.all().order_by("-Date")[0:number]
     return render_to_string("snippets/facture_summary/"+template, {'factures':factures, 'number': number})    
 
 @register.simple_tag

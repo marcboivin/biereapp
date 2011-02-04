@@ -79,6 +79,16 @@ Les unités en commandes pour les étudiants et les fournisseur utilisent que le
 
 L'inventaire ne gère pas les retour pour le moment
 
+====== Utilisateur restreint ======
+Si un nom d'utilisateur est le même qu'un nom de client, l'utilisateur est restrint, c'est automatique.
+Un utilisateur restreint ne peut que créer des factures et ajouter des transactions sur les items qui sont liés
+à son client. De plus, la création de facture est automatique, les titres sont sous la forme "Facture date_courrante"
+
+Il y a un mini bug sur ces utilisateurs, il faut leur donner les change rights ainsi que les add rights sur les transactions 
+et les factures sinon sa bug
+
+Autre mini bug: Si un usagé restreint essai de faire une facture à un autre usagé, ça lui en fait une. Son problème, mais bon.
+
 
 ===== Possible ToDo =====
  * Rendre les tables triable par Javascript: Filtre, order, etc.
