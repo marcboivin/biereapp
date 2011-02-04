@@ -240,11 +240,13 @@ def AJAX_AddInventaire(request):
             erreur.append ("L'option Facture inventaire n'existe pas, vous ne pouvez faire de mise à jour de l'inventaire")
             
         try:
-            prix = request.POST['Produit']
+            print request.POST['Produit']
+            prix = int(request.POST['Produit'])
             prix = Produit.objects.get(id = prix)
             prix = Prix.objects.filter(Produit=prix)[0:1].get()
-        except:
-            erreur.append("Impossible d'identifier le produit")
+        except Exception as e:
+            print e
+            erreur.append(u"Impossible d'identifier le produit, il n'a pas de prix. <a href=\\\"/produits/"+request.POST['Produit']+"/\\\">Ajoutez en un</a>")
             
         try:    
             qte = int(request.POST['Qte'])

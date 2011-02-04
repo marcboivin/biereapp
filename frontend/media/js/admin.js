@@ -74,7 +74,7 @@ jQuery(function($){
                   $.post('/ajax/inventaire/ajust/', 
                            { Produit: t.find('.id').first().html(), Qte: qte_to_send }, 
                            function(data){
-                               console.log(data)
+                               console.log(unescape(data.erreur));
                                if(data.erreur){
                                    
                                    // Errors, we show them and set it to the old qte
@@ -83,14 +83,13 @@ jQuery(function($){
                                        html += '<p>'+data.erreur[i]+'</p>';
                                    }
                                    
-                                   err.html(html).fadeIn();
+                                   err.html(unescape(html)).fadeIn();
                                    s.find('input').val(qte);
                                    
                                }else{
                                    s.find('input').val(data.qte);
                                    qte = data.qte; // Set to the newly approve quantity
                                    m.html('Mise à jour effecutée avec succès').fadeIn();
-                                   t.animate({backgroundColor:'#9DFF00'},200);
                                }
                            }, 'json');
               }
