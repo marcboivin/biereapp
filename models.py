@@ -618,6 +618,22 @@ class TransactionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TransactionForm, self).__init__(*args, **kwargs)
         #self.fields['Facture'] = forms.CharField(facture.id,widget=forms.HiddenInput, initial=facture.id)
+        self.fields['Prix'].queryset = self.DiscriminateProduits()
+        
+    def DiscriminateProduits(self):
+        user = GlobalUser.user
+        # Get the users' permissions
+        perms = ('',)
+        #for p in TYPE_TRANS:
+            # Loop permissions to check what kind of Prix you can get
+        if not user.has_perm('biereapp.add_permission'):
+            queryset = Prix.objects.exclude(Type='COST')
+        else:
+            queryset = Prix.objects.all()
+            #    perms = perms + (p[0],)
+
+
+        return queryset
         
     class Meta: 
         model = Transaction
