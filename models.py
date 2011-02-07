@@ -515,7 +515,7 @@ class Option(models.Model):
     def get(option):
         try:
              valeur = Option.objects.filter(Nom=option)[0:1].get()
-        except DoesNotExist:
+        except:
             return ''
         return valeur.Valeur
          
