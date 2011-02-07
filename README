@@ -80,9 +80,10 @@ Options qui sont utilisées par le système
  * Client interne: Quel client représente l'organisme et avec lequel on peut passer des commandes
  * Courriels: Liste de courriel, séparé par une virgule, des gens qui doivent être avisés quand une facture est terminée. 
  * Facture inventaire: ID de la facture qui contient l'inventaire pour les ajustements de cet inventaire
- * Numéro de base: ID de la facture pour ajouter pour afin d'afficher le nom numéro de facture
+ * Numéro facture: ID de la facture pour ajouter pour afin d'afficher le nom numéro de facture
+ * Préfixe facture: Chaîne de caractère à mettre avant le numéro de facture.
  Pour modifier une option, il est préférable d'en ajouter une. Si la TVQ change pour 9.5% il suffit d'ajouter une option TVQ 
- avec la valeur 0.095. Remplacer la TVQ actuelle va occasionner des comportements non voulus dans le système.
+ avec la valeur 0.095. Remplacer la TVQ actuelle va occasionner des comportements non voulus dans le système. 
 
 ===== Installation =====
  * Créer les usagés avec leur perissions respectives:

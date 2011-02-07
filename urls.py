@@ -3,7 +3,7 @@ from django.contrib.auth.views import login, logout
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from biereapp import settings
-from biereapp.views import *
+from biereapp.views import Dashboard, CreerFacture, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, FactureInFermer, ProduitInventaire, CommandeFournisseur, Commande, AJAX_AddInventaire
 from biereapp.models import Facture, Produit, Client
 
 admin.autodiscover()

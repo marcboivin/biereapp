@@ -455,6 +455,21 @@ class Facture(models.Model):
         
     def is_client_interne(self):
         return self.Client.is_client_interne()
+    def get_id(self):
+        # Makes the ID based on user defined options
+        num = Option.get("Numéro facture")
+        prefix = Option.get("Préfixe facture")
+        
+        try:
+            num = int(num)
+        except:
+            num = 0
+            
+        num += self.id
+        
+        id = prefix + str(num)
+        
+        return id
         
     def save(self):
         # Can we have a global user that we could put here,  without having it passed

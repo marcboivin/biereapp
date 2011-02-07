@@ -163,6 +163,12 @@ h3 {
     background: #B2FF00;
 }
 
+#main_menu .user {
+    margin: 15px 0;
+    text-align: right;
+    
+}
+
 #content {
     background: white;
     margin: 0 auto;

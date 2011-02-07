@@ -20,10 +20,10 @@ TODO:
     * Faire comme les menus de lojiq
   * [DONE] Le get total dans la liste de facture par client ne marche pas fuckall tous est à 0
   * [DONE] Support pour l'ajustement de l'inventaire dans la section inventaire
-  * Les usagés qui ont un client à leur nom, faut filtrer les facture pour montrer juste les leurs.
+  * [DONE] Les usagés qui ont un client à leur nom, faut filtrer les facture pour montrer juste les leurs.
     * Partout afficher juste leur fature
-    * Dans la liste des clients, mettre juste eux
-    * Faire la création de facture avec le nom automatiquement comme la commande
+    * [WON'T FIX] Dans la liste des clients, mettre juste eux
+    * [DONE] Faire la création de facture avec le nom automatiquement comme la commande
   * [DONE] Avoir une option get pour dire le nom du client quand on fait une facture comme ça on peut faire des facture à partir de la page client
   
 ===== Création de produit ======
