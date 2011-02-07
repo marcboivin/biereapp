@@ -627,10 +627,9 @@ class TransactionForm(forms.ModelForm):
         #for p in TYPE_TRANS:
             # Loop permissions to check what kind of Prix you can get
         if not user.has_perm('biereapp.add_permission'):
-            queryset = Prix.objects.exclude(Type='COST')
+            queryset = Prix.objects.exclude(Type='COST').exclude(Prive=True)
         else:
             queryset = Prix.objects.all()
-            #    perms = perms + (p[0],)
 
 
         return queryset
