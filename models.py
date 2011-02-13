@@ -34,6 +34,19 @@ TYPE_TRANS = (
     ('RTV', 'Retour vide'),
 )
 
+TRANS_FACTURABLE = (
+    'CMD',
+    'INV_OUT'
+)
+
+TRANS_NON_FACTURABLE = (
+    'CRE',
+    'INV_IN',
+    'PAIE',
+    'RBS',
+    'RT'
+)
+
 TYPE_PRIX = (
     ('COST', 'Prix cost'),
     ('AFF', 'Prix affiché'),
@@ -262,15 +275,14 @@ class Transaction(models.Model):
             return -self.Arbitraire
             
         if self.Arbitraire > -1:
+            if self.Type == 'PAIE':
+                return -self.Arbitraire
             return self.Arbitraire
         #   - Calculate based on the transaction type 
         
         # You do not oay when making a Commande
         if self.Type == 'CMD' or self.Type == 'RTV':
             return 0
-            
-        if self.Type == 'PAIE':
-            return -self.Qte
         
         # Those lines are just wrong     
         # Retour de Vide mean you give part of the Consigne back
@@ -377,11 +389,14 @@ class Facture(models.Model):
     def __unicode__(self):
         return self.Date.__str__() + ' pour ' + self.Client.Nom
         
-    def transactions(self):
+    def transactions(self, filtre=False):
 
         # We need a user in order to discriminate
         # What transactions can be shown
-        qs = Transaction.objects.filter(Facture=self);
+        if not filtre:
+            qs = Transaction.objects.filter(Facture=self);
+        else:
+            qs = Transaction.objects.filter(Facture=self).filter(Type__in=filtre);
 
         
         
@@ -390,9 +405,12 @@ class Facture(models.Model):
 
         return qs
         
-    def total(self):
+    def total(self, balance=False):
 
-        trans = self.transactions()
+        if balance:
+            trans = self.transactions( )
+        else:
+            trans = self.transactions( TRANS_FACTURABLE )
         
         tot = 0
         for t in trans:

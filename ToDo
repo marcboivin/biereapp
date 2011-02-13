@@ -1,5 +1,8 @@
 TODO:
-
+  * Mettre tous les sous-menu verticale
+  * Faire une suppression de transactions avec un X dans la liste des transactions
+  * Dans les facture mieux aligner les quantité et les prix (à droite), demander à laurent et à Seb leur opinion
+  * La mise à jour de l'inventaire fouarrer dans Firerof 3.5.2 
   * [DONE] REFAIRE LE FORMULAIRE DE COMMANDE POUR SUPPORTER TOUTES LES TYPE DE TRANSACTIONS SELON L'UTILISATEUR 
   * [DONE] Faire la page de la facture qui démonte les taxes et affiche la facture comme du monde. 
   * [PAS EN AJAX, MAIS DONE] Faire l'ajout de Prix en AJAX quand on crée ou visionne un produit

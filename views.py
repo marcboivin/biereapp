@@ -269,8 +269,25 @@ def AJAX_AddInventaire(request):
         return render_to_response('ajax/ajust_qte.js', {'trans': t})
         
     else:
-        raise Http404();
+        raise Http404()
         
+def AJAX_DeleteTransaction(request):
+    if(request.POST):
+        erreur = []
+            
+        try:
+            trans = Transaction.objects.get( id = int(request.POST['transaction_id']) )
+            if request.user.has_perm('biereapp.delete_transaction'):
+                trans.delete()
+            else: 
+                erreur.append(u'Méchant, méchant! Tu ne peux pas supprimer de transaction! --Peace')
+        except Exception as e:
+            print e
+            erreur.append(u'Impossible d\'identifier la transaction.')
+            
+        if len(erreur) > 0:
+            return render_to_response('ajax/transaction_delete.js', {'erreur': erreur})
         
-        
-    
+        return render_to_response('ajax/transaction_delete.js', {'trans': trans})       
+    else:
+        Http404()

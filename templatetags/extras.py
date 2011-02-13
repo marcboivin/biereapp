@@ -153,6 +153,11 @@ def monetize(value):
         Beware... 
     """
     
+    #is_negative = value < 0
+    
+    #if is_negative:
+    #    value = -value
+    
     if settings.DEBUG:
         print "monetize: " + str(value)
     
@@ -166,7 +171,13 @@ def monetize(value):
     if type(value) is not Decimal:
         value = Decimal(value)
     
-    return currency( value, grouping=True )
+    c = currency( value, grouping=True )
+    
+    #if is_negative:
+    #    print 'Was negative'
+    #    c = '-' + c
+    
+    return c
         
 "Mark string as safe"
 monetize.is_safe = True

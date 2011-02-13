@@ -260,7 +260,7 @@ form > div {
     overflow: hidden;
     padding: 50px 15px 15px;
     position: relative;
-    width: 400px;
+    width: 315px;
 }
 
 form header {
@@ -339,12 +339,15 @@ form input[type=submit]:after{
 .dans_la_commande {
     display: block;
     float: right;
+    font-size: 0.9em;
+    letter-spacing: 0.05em;
     margin: 15px 0;
     overflow: hidden;
-    padding: 25px;
+    padding: 25px 0;
     position: relative;
     padding-top: 50px;
-    width: 400px;
+    text-transform: uppercase;
+    width: 525px;
 }
 
 .dans_la_commande header {
@@ -372,17 +375,90 @@ form input[type=submit]:after{
    
 }
 
-.dans_la_commande ol {
-    margin-top: 15px;
+.dans_la_commande ol  {
+    margin: 15px 0 30px 0;
 }
 
 .dans_la_commande li {
+    padding: 5px 0;
+    position: relative;
     width: auto;
+}
+
+.dans_la_commande li:hover {
+    background: #f5f1ec;
+}
+
+.dans_la_commande li:hover .delete {
+    display: block;
+}
+
+.dans_la_commande em {
+    font-size: 1em;
+    font-weight: 100;
+}
+
+.dans_la_commande div {
+    overflow: hidden;
+}
+
+.dans_la_commande div > span {
+    float: left;
+    width: 40%;
+}
+
+.dans_la_commande div > em {
+    float: right;
+    text-align: right;
+    width: 40%;
+}
+
+.dans_la_commande .type {
+    display: inline-block;
+    width: 130px;
+}
+
+.dans_la_commande .price {
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+.dans_la_commande .desc {
+    display: inline-block;
+    width: 295px;
+}
+
+.dans_la_commande .delete {
+    background: #eaad4d url(../images/delete.png) 3px 3px no-repeat;
+    color: black;
+    cursor: pointer;
+    display: none;
+    font-weight: bold;
+    height: auto;
+    left: 0;
+    opacity: 0.5;
+    padding: 6px 28px;
+    position: absolute;
+    text-decoration: none;
+    top: 0;
+    width: auto;
+}
+
+.dans_la_commande .delete:hover {
+    opacity: 1;
+}
+
+.dans_la_commande .note {
+    font-size: 0.9em;
+    display:block;
+    padding-left: 20px;
+    text-transform: none;
 }
 
 #content footer {
     clear: both;
-    }
+}
 
 /* style pour les listes générique */
 .liste table{

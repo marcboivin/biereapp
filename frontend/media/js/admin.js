@@ -68,13 +68,11 @@ jQuery(function($){
                   m.fadeOut();
                   new_qte = s.find('input').val();
                   qte_to_send = new_qte - qte;
-                  console.log(qte_to_send);
                   
                   // Uglyass AJAX to get the new Qte if it was updated at all
                   $.post('/ajax/inventaire/ajust/', 
                            { Produit: t.find('.id').first().html(), Qte: qte_to_send }, 
                            function(data){
-                               console.log(unescape(data.erreur));
                                if(data.erreur){
                                    
                                    // Errors, we show them and set it to the old qte
@@ -98,5 +96,33 @@ jQuery(function($){
         
     });
     
+});
+
+jQuery(function($){
+    $('.dans_la_commande li .delete')
+            .click(function(e){
+                e.preventDefault();
+                
+                var t = $(this);
+                
+                // Get the ID and repalce the string to complete the transaction
+                var t_id = t.attr('id').replace('t_', '');
+                
+                var answer = confirm ("Voulez-vous vraiment supprimer cette tansaction?")
+                if (answer){
+                    $.post('/ajax/transactions/delete/', {transaction_id: t_id}, function(data){
+                        if(data.erreur){
+                            alert('Impossible de supprimer la transaction');
+                        }else{
+                            t.parent().remove();
+                        }
+                    });
+                }
+                else{
+                    return false;
+                }
+                
+                
+            }, 'json');
 });
 
