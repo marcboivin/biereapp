@@ -1,0 +1,41 @@
+Les noms:
+
+-Commande = Commande
+-Crédit = Crédit
+-Inventaire In = Entrée de marchandise
+-Inventaire Out = Vente
+-Paiement = Paiement
+-Rabais = Rabais
+-Retour = Retour
+-Retour vide = Retour vides
+
+Notes:
+
+FICHIER COMMENTS.PSD
+
+***Sur la facture du layer 1 (B128) je vois le paiement par chèque et je vois le montant en négatif.
+1-J'ai essayé de le faire sur la layer 5 et j'arrive pas à inscrire un montant ou encore à mettre une méthode de paiement
+2-Le bug dont je te parlais de commande d'achat VS commande de vente arrive ici: ya un inventaire out et un paiement en négatif donc c'est soit une facture client, au quel cas elle est bien monté et montre au client ce qu'il veut voir mais indique mal à l'asso ce qui s'est passsé, ou c'est une facture fournisseur au quel cas elle ne veut rien dire pcq on sort du stock et on paye... si c'est aps clair call me!
+
+***Pourquoi "à payer" est toujours "à venir"?
+
+***Le calcul des retour de vides se fait pas sur la ligne où on l'inscrit et le calcul total du retour des vides en bas n'est pas bon... à moins que ça soit pas 5c par bière... (layer 5)
+
+***c'est ptêtre juste moi qui gosse trop mais le fait que la qte s'écrivre à droite alors que tout le reste est sligné à gaudche est comme counterintuitive... (layer 4)
+
+FICHIER DESIGN.PSD
+
+***J'ai pas tes fonts fac ça chie un peu mais le principale est là
+
+***Le dessins de "produits dans la commande" est comme trop collé sur les fonts en dessous...
+
+FICHIER PRINT_DESIGN.PSD
+
+***3 date:
+1-date de la création de la commande
+2-date de l'évènement (dans le contexte qui nous occupe cette date servira à déterminer la date de facturation puisqu'on ne peut demander à l'asso qui organise l'évènement de payer avant d'avoir vendu le stock)
+3-date de la facturation (=date de l'évènement + 3?)
+
+***l'info est EXACTEMENT celle qui est disponible dans la layer Print Layout 1 de comments.psd, elle est jsute pas à la même place!
+
+***tu vas remarque que l'info est répété, c'est voulu, ça donne un meilleur tracking de où on en est, quand ya pas de transaction à écrire tout est jsute à zéro. si t'as des questions call me!
