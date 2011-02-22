@@ -118,17 +118,17 @@ h3 {
 
 #main_menu li ul {
     background: #b2ff00;
-	height: 56px;
+	height: auto;
 	left: -999em;
 	position: absolute;
-    width: 670px;
+    width: 10em;
 	z-index: 12;
 }
 
 #main_menu li ul li {
     margin-left: 0;
-    display: inline-block;
-    width: auto;
+    display: block;
+    width: 10em;
 }
 
 #main_menu li ul li a {
@@ -140,7 +140,7 @@ h3 {
 }
 
 #main_menu li:hover ul {
-	left: 0;	
+	left: auto;	
 }
 
 #main_menu:hover {
