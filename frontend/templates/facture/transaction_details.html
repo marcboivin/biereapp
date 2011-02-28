@@ -1,32 +1,29 @@
 {% load extras %}
-<ol>
-     {% for t in transactions %}
-         <li class="{{t.Type}}">
-             <time>{{t.Date|date:"D d M Y"|capfirst}}</time> 
-             <span class="type">{% trans_type t.Type %}</span> 
-             {{t.Prix.Produit.Nom}} 
-             
-             {%if t.Prix %}<em>{{t.Prix.Prix|monetize}}</em>{% endif %}    
-             
-             {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} 
-             
-             <small>{{t.Note}}</small> 
-             
-             {% if t.Qte %}x{{t.Qte}}{% endif %}
-             <span class="price">{% if t.Facture.is_client_interne%} — {%else%} {{t.get_total|monetize}} {%endif%}</span>
-        </li>
+<div id="facture">
+    <header>
+        <ul>
+            <li class="statut">Statut</li>
+            <li class="produit">Produit</li>
+            <li class="qte">Qte</li>
+            <li class="cout">Coût</li>
+        </ul>
+    </header>
+    {%  get_trans facture 'CMD' %}
+    {%  get_trans facture 'INV_OUT' %}
+    {%  get_trans facture 'RT' %}
+    {%  get_trans facture 'RTV' %}
+    {%  get_trans facture 'RBS' %}
+    {%  get_trans facture 'PAIE' %}
 
-     {% empty %}
-         <li>Pas de transaction</li>
-     {% endfor %}
- </ol>
- 
  {% if not facture.is_client_interne %}
  <ol class="taxes">
  {% for key, value in facture.get_taxes %}
      <li class="{{key}}">{{ key }} <span class="price">{{ value|monetize }}</span></li>
  {% endfor %}
 </ol>
+
+ {% endif %}
+
  <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
  <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>
- {% endif %}
+</div>

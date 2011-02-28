@@ -54,8 +54,8 @@
     </ol>
     {% if not facture.is_client_interne %}
     <div class="tot"><span>Total</span> <em>{{facture.total|monetize}}</em></div>
-    <div class="balance"><span>À payer</span> <em>À venir</em></div>
-    <div class="consigne"><span>Balance de la consigne</span> <em>{{facture.consigne}}</em></div>
+    <div class="balance"><span>À payer</span> <em>{% a_payer facture %}</em></div>
+    <div class="consigne"><span>Balance de la consigne</span> <em>{{facture.consigne|monetize }}</em></div>
     
     {% endif %}
 </section>

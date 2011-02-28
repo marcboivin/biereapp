@@ -534,24 +534,35 @@ form input[type=submit]:after{
     text-align: right;
 }
 
-.details ol {
-    margin-top: 50px;
+.trans {
+    background: #dffcc7;
+    margin-bottom: 50px;
+}
+
+.trans h4 {
+    text-transform: uppercase;
 }
 
 .details ol > li {
     height: 30px;
-    margin-left: 40px;
+    margin-left: 30px;
+    padding-top: 10px;
 }
 
-.details ol > li.CMD {
+.details ol .nom {
+    display: inline-block;
+    width: 405px;
+}
+
+/*.details ol > li.CMD {
     font-size: 1.1em;
     margin: 15px 0 0 0;
-}
+}*/
 
 .details ol > li time {
     color: #3e362b;
     display: inline-block;
-    width: 150px;
+    width: 140px;
 }
 
 .details ol > li .type {
@@ -591,6 +602,37 @@ form input[type=submit]:after{
     color: red;
     font-size: 16pt;
     margin: 15px 0;
+}
+
+#facture header {
+    background: transparent;
+    margin-top: 50px;
+}
+
+#facture header ol {
+    overflow: hidden;
+}
+
+#facture header li {
+    float: left;
+}
+
+#facture header .statut {
+    width: 170px;
+}
+
+#facture header .produit {
+    width: 410px;
+}
+
+
+#facture header .qte {
+    width: 150px;
+}
+
+
+#facture header .cout {
+    width: 150px;
 }
 
 

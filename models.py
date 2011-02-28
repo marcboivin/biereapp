@@ -27,7 +27,7 @@ TYPE_TRANS = (
     ('CMD', 'Commande'),
     ('CRE', 'Crédit'),
     ('INV_IN', 'Inventaire In'),
-    ('INV_OUT', 'Inventaire Out'),
+    ('INV_OUT', 'Vente'),
     ('PAIE', 'Paiement'),
     ('RBS', 'Rabais'),
     ('RT', 'Retour'),
@@ -387,6 +387,7 @@ class Facture(models.Model):
     Note = models.CharField("Événement ou raison", max_length=140)
     
     def __unicode__(self):
+    
         return self.Date.__str__() + ' pour ' + self.Client.Nom
         
     def transactions(self, filtre=False):
@@ -396,9 +397,7 @@ class Facture(models.Model):
         if not filtre:
             qs = Transaction.objects.filter(Facture=self);
         else:
-            qs = Transaction.objects.filter(Facture=self).filter(Type__in=filtre);
-
-        
+            qs = Transaction.objects.filter(Type__in=filtre).filter(Facture=self);
         
         if len(qs) < 1:
             return {}

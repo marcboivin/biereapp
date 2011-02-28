@@ -1,0 +1,10 @@
+{% load extras %}
+
+{%  get_trans facture 'CMD' %}
+{%  get_trans facture 'INV_OUT' %}
+{%  get_trans facture 'RT' %}
+{%  get_trans facture 'RTV' %}
+{%  get_trans facture 'CMD' %}
+
+ <div class="tot">Total <em>{{facture.total|monetize}}</em></div>
+ <div class="consigne">Balance de la consigne <em>{{facture.consigne}}</em></div>

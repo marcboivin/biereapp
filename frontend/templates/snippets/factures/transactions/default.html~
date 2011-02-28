@@ -1,0 +1,28 @@
+{% load extras %}
+<div class="trans">
+{% if type %}
+    <h4>{{type}}</h4>
+{% endif %}
+<ol>
+     {% for t in transactions %}
+         <li class="{{t.Type}}">
+             <time>{{t.Date|date:"D d M Y"|capfirst}}</time> 
+             <span class="type">{% trans_type t.Type %}</span> 
+             {{t.Prix.Produit.Nom}} 
+             
+             {%if t.Prix %}<em>{{t.Prix.Prix|monetize}}</em>{% endif %}    
+             
+             {% if t.Arbitraire > -1 %}<span>{{t.Raison}}</span>{% endif %} 
+             
+             <small>{{t.Note}}</small> 
+             
+             {% if t.Qte %}x{{t.Qte}}{% endif %}
+             <span class="price">{% if t.Facture.is_client_interne%} — {%else%} {{t.get_total|monetize}} {%endif%}</span>
+        </li>
+
+     {% empty %}
+         <li></li>
+     {% endfor %}
+ </ol>
+</div>
+
