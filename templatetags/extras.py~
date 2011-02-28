@@ -148,9 +148,11 @@ def get_url_facture(facture):
 @register.simple_tag
 def get_trans(facture, type=False, template='default'):
 	if not facture:
+		print 'No facture'
 		return ''
-	
+	print type
 	qs = facture.transactions(filtre=[type,])
+	print qs
 
 	type_t = False
 	for t in TYPE_TRANS:
@@ -162,15 +164,6 @@ def get_trans(facture, type=False, template='default'):
 					{'transactions': qs, 'type': type_t})
 	
 	return template
-
-@register.simple_tag
-def a_payer(facture):
-	if not facture:
-		return ''
-	
-	tot = facture.total(balance=True)  
-	return monetize(tot)
-
 @register.filter(name='monetize')
 @stringfilter    
 def monetize(value):
