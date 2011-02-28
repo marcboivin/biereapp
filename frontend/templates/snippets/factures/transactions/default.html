@@ -9,7 +9,7 @@
      {% for t in transactions %}
          <li class="{{t.Type}}">
              <time>{{t.Date|date:"D d M Y"|capfirst}}</time> 
-             <span class="nom">{{t.Prix.Produit.Nom}} </span>
+             <span class="nom">{{t.Prix.Produit.Brasseur.Nom}} {{t.Prix.Produit.Nom}} </span>
              
              {% if t.Qte %}<strong>{{t.Qte}}</strong>{% endif %}
              

@@ -11,10 +11,10 @@
 </header>
 
 <section class="details {% if facture.client_interne %}client_interne{%endif%}">
-    <h2>{% if facture.is_client_interne %}Commande{%else%}Facture{%endif%} #{{facture.get_id}}</h2>
-    <div class="client">Client: <span class="nom">{{facture.Client.Nom}}</span></div>
+    <h2>{% if facture.is_client_interne %}Commande{%else%}Facture{%endif%} <em>#{{facture.get_id}}</em></h2>
     <div class="date">Créé le: <time class="creation">{{ facture.Date|date:"D d M Y" }}</time></div>
-    <div class="raison">Événement ou raison: <span>{{facture.Note}}</span></div>
+    <div class="raison">Événement: <span>{{facture.Note}}</span></div>
+    <div class="client">Client: <span class="nom">{{facture.Client.Nom}}</span></div>
        {{facture.transaction_details}}
         
     </div>
