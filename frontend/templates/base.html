@@ -9,8 +9,6 @@
     {% block css %}
     {% endblock %}
     
-    {% block js %}
-    {% endblock %}
 </head>
 <body class="biereapp {%block body_class%}{%endblock%}">
     <div id="page">
@@ -25,7 +23,8 @@
                 {%endblock%}
         </section>
     </div>
-    <script src="{%get_path 'JS' %}jquery-1.4.2.js"></script>
-    <script src="{%get_path 'JS' %}admin.js"></script>
+    <script src="{%get_path 'JS' %}jquery.js"></script>
+    {% block js %}
+    {% endblock %}
 </body>
 </html>
