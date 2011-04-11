@@ -9,6 +9,7 @@ from django.contrib.auth.models import User, Group
 from django import forms
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template.loader import render_to_string
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 from biereapp import settings
 from biereapp.middleware import GlobalUser
@@ -515,6 +516,24 @@ class Facture(models.Model):
 
         # Call the parent method    
         super(Facture, self).save()
+
+    def fermer(self):
+	    # Wasn't closed before, so we send the mail
+        if not self.EstFermee:
+            mail_subject = render_to_string('mail/title.txt', {'facture': self})
+            mail_message = render_to_string('mail/content.html', {'facture': self})
+            mail_to = Option.get('Courriels')
+            mail_to = mail_to.split(',')
+            #send_mail(mail_subject, mail_message, 'biereapp@aep.polymtl.ca',mail_to, fail_silently=False)
+        
+            text_content = 'This is an important message.'
+            html_content = '<p>This is an <strong>important</strong> message.</p>'
+            msg = EmailMultiAlternatives(mail_subject, '', 'info@aep.polymtl.ca', mail_to)
+            msg.attach_alternative(mail_message, "text/html")
+            msg.send()
+        
+            self.EstFermee = True
+            self.save()
         
     class Meta:
         permissions = (

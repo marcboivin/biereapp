@@ -1,9 +1,9 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth.views import login, logout
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from biereapp import settings
-from biereapp.views import Dashboard, CreerFacture, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, FactureInFermer, ProduitInventaire, CommandeFournisseur, Commande, AJAX_AddInventaire, AJAX_DeleteTransaction
+from biereapp.views import Dashboard, CreerFacture, AddUserTransation, NewProduit, NewClient, FactureDetails, AddPrixProduit, FactureFermer, FactureInFermer, ProduitInventaire, CommandeFournisseur, Commande, AJAX_AddInventaire, AJAX_DeleteTransaction, super_facture
 from biereapp.models import Facture, Produit, Client
 
 admin.autodiscover()
@@ -55,7 +55,7 @@ urlpatterns = patterns('django.views.generic',
 
 urlpatterns += patterns('',
     # Enable the admin:
-    (r'^admin/(.*)', admin.site.root),
+    url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/login/$', login),
     (r'^accounts/logout/$', logout),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
@@ -66,6 +66,7 @@ urlpatterns += patterns('',
     (r'^factures/(?P<facture_id>\d+)/details/$', FactureDetails),
     (r'^factures/(?P<facture_id>\d+)/fermer/$', FactureFermer),
     (r'^factures/(?P<facture_id>\d+)/ouvrir/$', FactureInFermer),
+    (r'^factures/super/$', super_facture),
     (r'^produits/(?P<object_id>\d+)/add/$', AddPrixProduit),
     (r'^produits/inventaire/$', ProduitInventaire),
     (r'^commandes/creer/$', CommandeFournisseur),
@@ -80,3 +81,4 @@ urlpatterns += patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
 )
+

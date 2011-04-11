@@ -8,7 +8,6 @@ from django.template import Template, RequestContext
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail, EmailMultiAlternatives
 
 from math import fabs
 from datetime import date, datetime
@@ -162,22 +161,7 @@ def FactureFermer(request, facture_id):
         raise Http404
 
     if facture:
-        # Wasn't closed before, so we send the mail
-        if not facture.EstFermee:
-            mail_subject = render_to_string('mail/title.txt', {'facture': facture})
-            mail_message = render_to_string('mail/content.html', {'facture': facture})
-            mail_to = Option.get('Courriels')
-            mail_to = mail_to.split(',')
-            #send_mail(mail_subject, mail_message, 'biereapp@aep.polymtl.ca',mail_to, fail_silently=False)
-            
-            text_content = 'This is an important message.'
-            html_content = '<p>This is an <strong>important</strong> message.</p>'
-            msg = EmailMultiAlternatives(mail_subject, '', 'info@aep.polymtl.ca', mail_to)
-            msg.attach_alternative(mail_message, "text/html")
-            msg.send()
-            
-            facture.EstFermee = True
-            facture.save()
+        facture.fermer()
     
     return HttpResponseRedirect('/factures/'+str(facture.id)+'/')  
 
@@ -203,6 +187,13 @@ def ProduitInventaire(request):
     
 @login_required
 def CommandeFournisseur(request):
+
+    facture = create_commande_fournisseur(request)
+    
+    return render_to_response('facture/facture.html', {'facture': facture })
+
+# Make a new Commande Fournisseur and returns it    
+def create_commande_fournisseur(request):
     # Try to get the Client interne Option
     try:
         client = Option.get('Client interne')
@@ -216,7 +207,7 @@ def CommandeFournisseur(request):
     facture.Client = client
     facture.save()
     
-    return render_to_response('facture/facture.html', {'facture': facture })
+    return facture
     
 @login_required
 def Commande(request):
@@ -291,3 +282,18 @@ def AJAX_DeleteTransaction(request):
         return render_to_response('ajax/transaction_delete.js', {'trans': trans})       
     else:
         Http404()
+
+@login_required
+def super_facture(request):
+    a = request.GET['a']
+    if 'commande_comite' == a:
+        pass
+    if 'vente_comptant' == a:
+        client = Option.get('Client comptant')
+        pass
+    if 'vente_comite' == a:
+        pass
+    if 'reception_fournisseur' == a:
+		pass
+		
+    return render_to_response('facture/super.html', {})

@@ -1,3 +1,20 @@
+La TODO de paufinement pour les usagé:
+  * Streamliner les étapes. Sur la page d'accueil mettre des actions VACHEMENT CLAIRE:
+    * Commande d'une comité
+    * Commande au comptant
+    * Vente au comité
+    * Réception du fournisseur
+  * Faudrait que le bouton stock mène vers l'inventaire
+  * Inventaire_out Vente aux comités
+  * Utilisateurs pubs et poly habs doivent pouvoir voir l'inventaire. Il vont faire des facture en asynchronous
+  * Quand une commande est faite on pourrait avoir une option «Livrer le commande» 
+  * Le processus serait en action: 1) Passer une commande 2) Avoir des stades: Vendu et payer
+  * On pourrait p-ê interagir directement dans la facture, en AJAX, pour faire les actions, parce qu'en fait tout est là.
+  * Faire un filtre javascript pour trier les tableau par mots clefs
+  * Auto complete pour l'ajout des produits dans la création de commande, dans la version en AJAX.
+  * Terminer la commande doit être le plus gros bouton du monde
+  * Changer le vocabulaire de raison ou événement (personne responsable, genre)
+
 TODO:
   * [DONE] Mettre tous les sous-menu verticale
   * [DONE] Faire une suppression de transactions avec un X dans la liste des transactions
